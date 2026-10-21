@@ -15,6 +15,7 @@ import {
   hero,
   person,
   processes,
+  productCase,
   stack,
   tools,
   levelText,
@@ -38,7 +39,7 @@ export function buildCorpus(): Fragment[] {
     `Живу в городе ${person.city}, готов работать очно, гибридно или удалённо. Удобнее всего писать в Telegram ${person.telegramHandle}.`,
   );
 
-  for (const c of [flagship, ...aiCases]) {
+  for (const c of [flagship, ...aiCases, productCase]) {
     add(`${c.id}-summary`, c.anchor, c.title, `${c.summary} ${c.problem}`);
     c.did.forEach((d, i) => add(`${c.id}-did-${i}`, c.anchor, c.title, d));
     add(`${c.id}-why`, c.anchor, c.title, c.why);

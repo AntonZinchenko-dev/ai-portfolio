@@ -58,8 +58,15 @@ for (const vp of [
   const noAlt = await page.locator('img:not([alt])').count();
   check(noAlt === 0, 'у всех картинок есть alt');
 
+  await page.waitForSelector('.evo[data-hydrated]', { timeout: 8000 });
+  const evoW = await page.evaluate(() => document.querySelector('.evo__canvas')?.width ?? 0);
+  check(evoW > 0, 'анимация первого экрана рисуется');
+  await page.locator('.evo__step').nth(2).click();
+  check((await page.locator('.evo__step.is-active .evo__name').innerText()) === 'Продукт', 'этапы анимации переключаются по клику');
+
+  await page.locator('#freight').scrollIntoViewIfNeeded();
   await page.waitForSelector('.intake[data-hydrated]', { timeout: 8000 });
-  check(true, 'первый экран ожил');
+  check(true, 'демо разбора заявки ожило в кейсе Freight Intake');
 
   await page.locator('#ask').scrollIntoViewIfNeeded();
   await page.getByRole('button', { name: 'Что у вас с Python и SQL?' }).click();

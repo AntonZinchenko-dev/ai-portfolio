@@ -2350,3 +2350,157 @@ img[data-zoom] {
     transform: scale(0.96);
   }
 }
+
+/* ==========================================================
+   Треугольники: фон по краям и анимация первого экрана
+   ========================================================== */
+:root {
+  --iris-1: #1fa59d;
+  --iris-2: #4f7cff;
+  --iris-3: #a46bff;
+}
+
+.edges {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  --fade: 90px;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    #000 0,
+    #000 calc(var(--side, 0px) - var(--fade)),
+    transparent calc(var(--side, 0px) + 40px),
+    transparent calc(100% - var(--side, 0px) - 40px),
+    #000 calc(100% - var(--side, 0px) + var(--fade)),
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    #000 0,
+    #000 calc(var(--side, 0px) - var(--fade)),
+    transparent calc(var(--side, 0px) + 40px),
+    transparent calc(100% - var(--side, 0px) - 40px),
+    #000 calc(100% - var(--side, 0px) + var(--fade)),
+    #000 100%
+  );
+}
+
+.edges[hidden] {
+  display: none;
+}
+
+@media print {
+  .edges {
+    display: none;
+  }
+}
+
+.hero__evo {
+  align-self: center;
+  min-width: 0;
+}
+
+.evo__stage {
+  position: relative;
+  aspect-ratio: 480 / 400;
+}
+
+/* Пока код не загрузился — мягкое пятно на месте фигуры, а не пустота */
+.evo__stage::before {
+  content: '';
+  position: absolute;
+  inset: 12% 14%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--petrol-tint), transparent);
+}
+
+.evo__canvas {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.evo__steps {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 4px 0 0;
+  padding: 0;
+}
+
+.evo__step {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  padding: 0 0 4px;
+  border: 0;
+  background: none;
+  color: var(--graphite);
+  font: inherit;
+  font-size: var(--step--1);
+  text-align: left;
+  cursor: pointer;
+}
+
+.evo__step:hover {
+  color: var(--ink);
+}
+
+.evo__step.is-active {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.evo__bar {
+  position: relative;
+  height: 3px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--rule);
+}
+
+.evo__bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--iris-1), var(--iris-2), var(--iris-3));
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+}
+
+.evo__step.is-past .evo__bar::after {
+  transform: scaleX(1);
+  opacity: 0.45;
+}
+
+.evo__step.is-active .evo__bar::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .evo__step.is-active .evo__bar::after {
+    animation: evo-fill 4.7s linear both;
+  }
+}
+
+@keyframes evo-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.evo__text {
+  margin-top: 10px;
+  min-height: 3.2em;
+  color: var(--graphite);
+  font-size: var(--step--1);
+  line-height: 1.6;
+}

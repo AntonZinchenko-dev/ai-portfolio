@@ -26,7 +26,7 @@ const REPO_URL = process.env.REPO_URL || 'https://github.com/AntonZinchenko-dev/
 const ASK_API = process.env.ASK_API_URL || '';
 const NOINDEX = process.env.NOINDEX === '1';
 const DESCRIPTION =
-  'AI-инженер из Екатеринбурга: LLM-системы для производства, складов и данных. Шесть лет интерфейсов для промышленных систем, последний год — агенты, RAG и разбор документов.';
+  'AI-инженер из Екатеринбурга: довожу идеи до продуктов — проверка гипотезы, MVP с помощью ИИ, запуск. Шесть лет систем для производства, складов и логистики, последний год — LLM, агенты и RAG.';
 
 function ensureSlash(url) {
   return url.endsWith('/') ? url : `${url}/`;

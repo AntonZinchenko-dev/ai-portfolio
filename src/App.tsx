@@ -11,6 +11,7 @@ import {
   levelText,
   person,
   processes,
+  productCase,
   stack,
   tools,
   type CaseStudy,
@@ -20,6 +21,7 @@ import { Picture, hasImage } from './components/Picture';
 import { Chain } from './components/Chain';
 import { FileIcon, GithubIcon, MailIcon, MoonIcon, SunIcon, TelegramIcon } from './components/Icons';
 import IntakeDemo from './islands/IntakeDemo';
+import Evolution from './islands/Evolution';
 import VideoShowcase from './islands/VideoShowcase';
 import FitMatrix from './islands/FitMatrix';
 import AskWidget from './islands/AskWidget';
@@ -189,6 +191,12 @@ function CaseCard({ c }: { c: CaseStudy }) {
       </h3>
       <p className="case__summary">{c.summary}</p>
       {CHAINS[c.id] && <Chain steps={CHAINS[c.id]!} label={`Как устроен ${c.title}`} />}
+      {c.id === 'freight' && (
+        <div className="case__viz">
+          <Island name="intake-demo" component={IntakeDemo} props={{}} />
+          <p className="showcase__caption">{heroDemo.caption}</p>
+        </div>
+      )}
       <div className="case__cols">
         <div>
           <CaseBody c={c} />
@@ -282,17 +290,14 @@ export function App({ hasResume, repoUrl }: AppProps) {
                 ))}
               </dl>
             </div>
-            <div>
-              <Island name="intake-demo" component={IntakeDemo} props={{}} eager />
-              <p className="hero__caption">{heroDemo.caption}</p>
-            </div>
+            <Island name="evolution" component={Evolution} props={{}} eager className="hero__evo" />
           </div>
         </section>
 
         <Section
           id="cases"
           title="Проекты"
-          intro="Сначала решения на данных и LLM-системы, потом внутренние инструменты. У каждого проекта подписано, чей он и в каком состоянии."
+          intro="Решения на данных заказчика, LLM-системы и продукт, доведённый до конца. Над каждым проектом подписано, чей он: заказчика, мой или тестовое задание."
         >
           <article className="case case--flagship" id={flagship.anchor} aria-labelledby="pipepass-title">
             <span className={`badge badge--${flagship.badge}`}>{flagship.badgeText}</span>
@@ -347,6 +352,7 @@ export function App({ hasResume, repoUrl }: AppProps) {
           <CaseCard c={agentyard} />
           <CaseCard c={rag} />
           <CaseCard c={freight} />
+          <CaseCard c={productCase} />
 
           <h3 className="subhead" id="tools">
             Внутренние инструменты
@@ -357,7 +363,7 @@ export function App({ hasResume, repoUrl }: AppProps) {
                 <span className="tool__title">{t.title}</span>
                 <span>
                   {t.text}
-                  <span className="tool__stack">{t.stack}</span>
+                  {t.stack && <span className="tool__stack">{t.stack}</span>}
                 </span>
                 <span className="tool__links">
                   {t.links.length ? (
@@ -378,7 +384,7 @@ export function App({ hasResume, repoUrl }: AppProps) {
         <Section
           id="fit"
           title="Под вашу вакансию"
-          intro="Каждое требование из описания вакансии и чем я его подтверждаю. Где опыта мало, так и написано."
+          intro="Требования вакансии и чем я их подтверждаю. Смотрю на них как разработчик продукта: что проверить быстро, что довести до боевой версии. Где опыта мало, так и написано."
         >
           <Island name="fit-matrix" component={FitMatrix} props={{}} />
         </Section>
@@ -386,7 +392,7 @@ export function App({ hasResume, repoUrl }: AppProps) {
         <Section
           id="processes"
           title="Знаю, как устроены процессы"
-          intro="Что я делал в системах, где похожий процесс есть у сети кухонь и магазинов и какой пилот с ИИ я бы проверил первым."
+          intro="Что я делал в системах, где похожий процесс есть у сети кухонь и магазинов, и какую идею я бы первой проверил как MVP."
         >
           {opsPhotos.length > 0 && (
             <div className="ops-photos">
@@ -448,8 +454,8 @@ export function App({ hasResume, repoUrl }: AppProps) {
 
         <Section
           id="approach"
-          title="Как веду внедрение"
-          intro="Шесть шагов от процесса до запуска. У каждого — пример из моих проектов."
+          title="От идеи до продукта"
+          intro="Как идея становится MVP, а MVP — продуктом, которым пользуются. У каждого шага — пример из моих проектов."
         >
           <ol className="steps">
             {approach.map((s) => (
@@ -536,7 +542,7 @@ export function App({ hasResume, repoUrl }: AppProps) {
             <Picture name="portrait" className="contacts__photo" sizes="(min-width: 768px) 160px, 112px" />
             <div>
             <h2 className="contacts__title" id="contacts-title">
-              Обсудим, какой процесс автоматизировать первым
+              Обсудим, какую идею проверить первой
             </h2>
             <p className="contacts__text">
               Живу в Екатеринбурге, готов работать очно. Быстрее всего отвечаю в Telegram.

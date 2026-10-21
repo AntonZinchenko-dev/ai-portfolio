@@ -1,5 +1,6 @@
 import './styles/global.css';
 import { islands } from './islands/registry';
+import { setupEdges } from './lib/edges';
 
 /* ---------- Тема ---------- */
 const THEME_KEY = 'theme';
@@ -164,3 +165,8 @@ setupHeader();
 setupChains();
 setupZoom();
 setupIslands();
+
+// Фон по краям не нужен для первого кадра — запускаем, когда браузер освободится
+const idle = (window as Window & { requestIdleCallback?: (cb: () => void) => void }).requestIdleCallback;
+if (idle) idle(setupEdges);
+else setTimeout(setupEdges, 300);

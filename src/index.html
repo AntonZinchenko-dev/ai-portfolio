@@ -37,7 +37,7 @@
           var t = localStorage.getItem('theme');
           if (t === 'light' || t === 'dark') root.dataset.theme = t;
         } catch (e) {}
-        // Если код первого экрана не загрузился, через 4 секунды показываем поля разбора без анимации.
+        // Если код демо разбора не загрузился, через 4 секунды показываем поля без анимации.
         setTimeout(function () {
           var el = document.querySelector('.intake');
           if (el && !el.hasAttribute('data-hydrated')) el.classList.add('is-done');
