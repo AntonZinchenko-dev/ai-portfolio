@@ -1,0 +1,82 @@
+name: Сборка и публикация
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  # Проверка типов идёт параллельно и публикацию не держит:
+  # если она покраснеет, это видно в репозитории, а сайт всё равно обновится.
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Зависимости
+        run: npm install --no-audit --no-fund
+      - name: Проверка типов
+        run: npm run typecheck
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Зависимости
+        run: npm install --no-audit --no-fund
+
+      - name: Модульные тесты
+        run: npm test
+
+      - name: Адрес сайта
+        id: site
+        run: |
+          OWNER="${GITHUB_REPOSITORY_OWNER,,}"
+          REPO="${GITHUB_REPOSITORY#*/}"
+          if [ "${REPO,,}" = "${OWNER}.github.io" ]; then
+            echo "url=https://${OWNER}.github.io/" >> "$GITHUB_OUTPUT"
+          else
+            echo "url=https://${OWNER}.github.io/${REPO}/" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Сборка
+        run: npm run build
+        env:
+          SITE_URL: ${{ steps.site.outputs.url }}
+          REPO_URL: https://github.com/${{ github.repository }}
+
+      - name: Браузер для сквозной проверки
+        run: npx playwright install --with-deps chromium
+
+      - name: Сквозная проверка
+        run: npm run e2e
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

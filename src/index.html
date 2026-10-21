@@ -1,12 +1,11 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Антон Зинченко — AI-инженер</title>
     <meta name="description" content="%DESCRIPTION%" />
-    <meta name="theme-color" content="#f2f4f5" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#141a21" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#141a21" />
     <meta name="robots" content="%ROBOTS%" />
     <meta name="ask-api" content="%ASK_API%" />
     <link rel="canonical" href="%SITE_URL%" />
@@ -30,7 +29,7 @@
     />
 
     <script>
-      // Тема до первой отрисовки, чтобы страница не мигала белым в тёмной теме.
+      // По умолчанию тёмная тема; светлая — только если человек сам её выбрал.
       (function () {
         var root = document.documentElement;
         root.classList.add('js');

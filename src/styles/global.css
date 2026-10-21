@@ -434,8 +434,19 @@ button {
 }
 
 .hero__who {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   color: var(--graphite);
-  margin-bottom: 18px;
+  margin-bottom: 22px;
+}
+
+.hero__avatar img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px var(--paper), 0 0 0 3px var(--rule-strong);
 }
 
 .hero__who strong {
@@ -1041,6 +1052,19 @@ button {
   .shots--2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  /* Три кадра: первый крупно на всю ширину, два под ним. */
+  .shots--feature .shot:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+.shots .shot {
+  margin-top: 0;
+}
+
+.shots {
+  margin-top: 24px;
 }
 
 /* ---------- Инструменты ---------- */
@@ -1782,6 +1806,33 @@ button {
   }
 }
 
+.contacts__grid {
+  display: grid;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .contacts__grid {
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: 48px;
+  }
+}
+
+.contacts__photo img {
+  width: 112px;
+  height: 112px;
+  border-radius: var(--radius-l);
+  object-fit: cover;
+}
+
+@media (min-width: 768px) {
+  .contacts__photo img {
+    width: 160px;
+    height: 160px;
+  }
+}
+
 .contacts__title {
   font-size: var(--step-4);
   line-height: 1.08;
@@ -1826,7 +1877,6 @@ button {
 @media print {
   .header,
   .ask,
-  .showcase__controls,
   .theme-toggle {
     display: none !important;
   }
@@ -1942,52 +1992,6 @@ button {
   background: var(--console-accent);
   transform-origin: 0 50%;
   transform: scaleX(0);
-}
-
-.showcase__chapters {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-  margin-top: 12px;
-}
-
-@container (min-width: 760px) {
-  .showcase__chapters {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-.showcase__chapter {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  text-align: left;
-  padding: 10px 12px;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-s);
-  background: var(--paper);
-  font-size: 0.9375rem;
-  line-height: 1.35;
-  cursor: pointer;
-  transition: border-color 0.2s, background-color 0.2s;
-}
-
-.showcase__chapter:hover {
-  border-color: var(--petrol);
-}
-
-.showcase__chapter[aria-current] {
-  border-color: var(--petrol);
-  background: var(--petrol-tint);
-}
-
-.showcase__time {
-  font-size: 0.75rem;
-  color: var(--graphite);
-  font-variant-numeric: tabular-nums;
 }
 
 .showcase__caption {
@@ -2274,5 +2278,75 @@ button {
 @media (min-width: 640px) {
   .case__cols--split .case__facts--4 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ==========================================================
+   Скриншот во весь экран
+   ========================================================== */
+img[data-zoom] {
+  cursor: zoom-in;
+}
+
+.zoom {
+  max-width: min(1600px, 96vw);
+  max-height: 94vh;
+  width: fit-content;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-m);
+  background: transparent;
+  overflow: visible;
+}
+
+.zoom::backdrop {
+  background: rgba(6, 10, 14, 0.82);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.zoom img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(94vh - 48px);
+  width: auto;
+  height: auto;
+  border-radius: var(--radius-m);
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.6);
+}
+
+.zoom__caption {
+  margin-top: 12px;
+  color: #c9d2d9;
+  font-size: var(--step--1);
+  text-align: center;
+}
+
+.zoom__close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: #1b232c;
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .zoom[open] {
+    animation: zoom-in 0.22s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+}
+
+@keyframes zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
   }
 }

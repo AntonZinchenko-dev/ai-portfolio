@@ -5,15 +5,12 @@ import { islands } from './islands/registry';
 const THEME_KEY = 'theme';
 
 function effectiveTheme(): 'light' | 'dark' {
-  const set = document.documentElement.dataset.theme;
-  if (set === 'light' || set === 'dark') return set;
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
 }
 
 function setupTheme() {
   const root = document.documentElement;
-  // Явно проставляем тему, чтобы иконка кнопки соответствовала тому, что на экране.
-  root.dataset.theme = effectiveTheme();
+  // Тёмная по умолчанию задана прямо в HTML, светлую ставит скрипт в <head>, если её выбирали.
   const button = document.getElementById('theme-toggle');
   button?.addEventListener('click', (event) => {
     const next = effectiveTheme() === 'dark' ? 'light' : 'dark';
@@ -46,15 +43,6 @@ function setupTheme() {
         );
       })
       .catch(() => undefined);
-  });
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    let stored: string | null = null;
-    try {
-      stored = localStorage.getItem(THEME_KEY);
-    } catch {
-      stored = null;
-    }
-    if (!stored) root.dataset.theme = e.matches ? 'dark' : 'light';
   });
 }
 
@@ -102,6 +90,42 @@ function setupChains() {
   document.querySelectorAll('[data-chain]').forEach((el) => io.observe(el));
 }
 
+/* ---------- Скриншоты во весь экран ---------- */
+function setupZoom() {
+  const images = document.querySelectorAll<HTMLImageElement>('img[data-zoom]');
+  if (!images.length) return;
+  const dialog = document.createElement('dialog');
+  dialog.className = 'zoom';
+  dialog.innerHTML =
+    '<img alt="" /><button type="button" class="zoom__close" aria-label="Закрыть">×</button><p class="zoom__caption"></p>';
+  document.body.append(dialog);
+  const big = dialog.querySelector('img')!;
+  const caption = dialog.querySelector<HTMLElement>('.zoom__caption')!;
+  const close = () => dialog.close();
+  dialog.querySelector('.zoom__close')!.addEventListener('click', close);
+  // Клик мимо картинки закрывает.
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) close();
+  });
+  images.forEach((img) => {
+    img.tabIndex = 0;
+    img.setAttribute('role', 'button');
+    const open = () => {
+      big.src = img.dataset.zoom ?? img.currentSrc;
+      big.alt = img.alt;
+      caption.textContent = img.closest('figure')?.querySelector('figcaption')?.textContent ?? '';
+      dialog.showModal();
+    };
+    img.addEventListener('click', open);
+    img.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        open();
+      }
+    });
+  });
+}
+
 /* ---------- Острова ---------- */
 async function hydrate(el: HTMLElement) {
   const name = el.dataset.island ?? '';
@@ -138,4 +162,5 @@ function setupIslands() {
 setupTheme();
 setupHeader();
 setupChains();
+setupZoom();
 setupIslands();

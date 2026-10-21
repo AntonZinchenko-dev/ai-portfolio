@@ -1,1 +1,156 @@
-{}
+{
+  "agentyard-dark": {
+    "alt": "AgentYard в тёмной теме: этапы прогона и панель застрявшей задачи с ошибкой и полем для подсказки",
+    "variants": [
+      {
+        "media": null,
+        "avif": "./img/agentyard-dark-desktop-640.avif 640w, ./img/agentyard-dark-desktop-960.avif 960w, ./img/agentyard-dark-desktop-1440.avif 1440w, ./img/agentyard-dark-desktop-1920.avif 1920w",
+        "webp": "./img/agentyard-dark-desktop-640.webp 640w, ./img/agentyard-dark-desktop-960.webp 960w, ./img/agentyard-dark-desktop-1440.webp 1440w, ./img/agentyard-dark-desktop-1920.webp 1920w",
+        "src": "./img/agentyard-dark-desktop-1920.webp",
+        "width": 1920,
+        "height": 1200
+      }
+    ]
+  },
+  "agentyard-plan": {
+    "alt": "AgentYard: план прогона — как понята цель, этапы, задачи и пакеты для установки",
+    "variants": [
+      {
+        "media": null,
+        "avif": "./img/agentyard-plan-desktop-640.avif 640w, ./img/agentyard-plan-desktop-960.avif 960w, ./img/agentyard-plan-desktop-1440.avif 1440w, ./img/agentyard-plan-desktop-1920.avif 1920w",
+        "webp": "./img/agentyard-plan-desktop-640.webp 640w, ./img/agentyard-plan-desktop-960.webp 960w, ./img/agentyard-plan-desktop-1440.webp 1440w, ./img/agentyard-plan-desktop-1920.webp 1920w",
+        "src": "./img/agentyard-plan-desktop-1920.webp",
+        "width": 1920,
+        "height": 1200
+      }
+    ]
+  },
+  "agentyard-progress": {
+    "alt": "AgentYard: ход работы — этапы, что делает каждая модель, журнал",
+    "variants": [
+      {
+        "media": null,
+        "avif": "./img/agentyard-progress-desktop-640.avif 640w, ./img/agentyard-progress-desktop-960.avif 960w, ./img/agentyard-progress-desktop-1440.avif 1440w, ./img/agentyard-progress-desktop-1920.avif 1920w",
+        "webp": "./img/agentyard-progress-desktop-640.webp 640w, ./img/agentyard-progress-desktop-960.webp 960w, ./img/agentyard-progress-desktop-1440.webp 1440w, ./img/agentyard-progress-desktop-1920.webp 1920w",
+        "src": "./img/agentyard-progress-desktop-1920.webp",
+        "width": 1920,
+        "height": 1200
+      }
+    ]
+  },
+  "freight-clarify": {
+    "alt": "Freight Intake: уточняющие вопросы — две станции «Новокузнецк» из справочника и вопрос про единицу ставки",
+    "variants": [
+      {
+        "media": null,
+        "avif": "./img/freight-clarify-desktop-640.avif 640w, ./img/freight-clarify-desktop-960.avif 960w",
+        "webp": "./img/freight-clarify-desktop-640.webp 640w, ./img/freight-clarify-desktop-960.webp 960w",
+        "src": "./img/freight-clarify-desktop-960.webp",
+        "width": 960,
+        "height": 720
+      }
+    ]
+  },
+  "freight-overview": {
+    "alt": "Freight Intake: примеры заявок, шаги разбора, документ с подсвеченными цитатами, уточнения и черновик сделки",
+    "variants": [
+      {
+        "media": null,
+        "avif": "./img/freight-overview-desktop-640.avif 640w, ./img/freight-overview-desktop-960.avif 960w, ./img/freight-overview-desktop-1440.avif 1440w",
+        "webp": "./img/freight-overview-desktop-640.webp 640w, ./img/freight-overview-desktop-960.webp 960w, ./img/freight-overview-desktop-1440.webp 1440w",
+        "src": "./img/freight-overview-desktop-1440.webp",
+        "width": 1440,
+        "height": 900
+      }
+    ]
+  },
+  "freight-quotes": {
+    "alt": "Freight Intake: шаги разбора, поток модели в JSON по схеме и документ, где каждое значение подсвечено цитатой",
+    "variants": [
+      {
+        "media": null,
+        "avif": "./img/freight-quotes-desktop-640.avif 640w, ./img/freight-quotes-desktop-960.avif 960w",
+        "webp": "./img/freight-quotes-desktop-640.webp 640w, ./img/freight-quotes-desktop-960.webp 960w",
+        "src": "./img/freight-quotes-desktop-960.webp",
+        "width": 960,
+        "height": 720
+      }
+    ]
+  },
+  "ops-drilling": {
+    "alt": "Буровая установка в заснеженной тайге, на переднем плане бурильные трубы",
+    "variants": [
+      {
+        "media": "(max-width: 767px)",
+        "avif": "./img/ops-drilling-mobile-480.avif 480w, ./img/ops-drilling-mobile-768.avif 768w, ./img/ops-drilling-mobile-1080.avif 1080w",
+        "webp": "./img/ops-drilling-mobile-480.webp 480w, ./img/ops-drilling-mobile-768.webp 768w, ./img/ops-drilling-mobile-1080.webp 1080w",
+        "src": "./img/ops-drilling-mobile-1080.webp",
+        "width": 1080,
+        "height": 675
+      },
+      {
+        "media": null,
+        "avif": "./img/ops-drilling-desktop-640.avif 640w, ./img/ops-drilling-desktop-960.avif 960w",
+        "webp": "./img/ops-drilling-desktop-640.webp 640w, ./img/ops-drilling-desktop-960.webp 960w",
+        "src": "./img/ops-drilling-desktop-960.webp",
+        "width": 960,
+        "height": 720
+      }
+    ]
+  },
+  "ops-kitchen": {
+    "alt": "Цех фабрики-кухни: сотрудники раскладывают готовые блюда в контейнеры",
+    "variants": [
+      {
+        "media": "(max-width: 767px)",
+        "avif": "./img/ops-kitchen-mobile-480.avif 480w, ./img/ops-kitchen-mobile-768.avif 768w, ./img/ops-kitchen-mobile-1080.avif 1080w",
+        "webp": "./img/ops-kitchen-mobile-480.webp 480w, ./img/ops-kitchen-mobile-768.webp 768w, ./img/ops-kitchen-mobile-1080.webp 1080w",
+        "src": "./img/ops-kitchen-mobile-1080.webp",
+        "width": 1080,
+        "height": 675
+      },
+      {
+        "media": null,
+        "avif": "./img/ops-kitchen-desktop-640.avif 640w, ./img/ops-kitchen-desktop-960.avif 960w",
+        "webp": "./img/ops-kitchen-desktop-640.webp 640w, ./img/ops-kitchen-desktop-960.webp 960w",
+        "src": "./img/ops-kitchen-desktop-960.webp",
+        "width": 960,
+        "height": 720
+      }
+    ]
+  },
+  "ops-warehouse": {
+    "alt": "Кладовщик сканирует коробку на стеллаже склада",
+    "variants": [
+      {
+        "media": "(max-width: 767px)",
+        "avif": "./img/ops-warehouse-mobile-480.avif 480w, ./img/ops-warehouse-mobile-768.avif 768w, ./img/ops-warehouse-mobile-1080.avif 1080w",
+        "webp": "./img/ops-warehouse-mobile-480.webp 480w, ./img/ops-warehouse-mobile-768.webp 768w, ./img/ops-warehouse-mobile-1080.webp 1080w",
+        "src": "./img/ops-warehouse-mobile-1080.webp",
+        "width": 1080,
+        "height": 675
+      },
+      {
+        "media": null,
+        "avif": "./img/ops-warehouse-desktop-640.avif 640w, ./img/ops-warehouse-desktop-960.avif 960w",
+        "webp": "./img/ops-warehouse-desktop-640.webp 640w, ./img/ops-warehouse-desktop-960.webp 960w",
+        "src": "./img/ops-warehouse-desktop-960.webp",
+        "width": 960,
+        "height": 720
+      }
+    ]
+  },
+  "portrait": {
+    "alt": "Антон Зинченко",
+    "variants": [
+      {
+        "media": null,
+        "avif": "./img/portrait-desktop-96.avif 96w, ./img/portrait-desktop-192.avif 192w, ./img/portrait-desktop-320.avif 320w",
+        "webp": "./img/portrait-desktop-96.webp 96w, ./img/portrait-desktop-192.webp 192w, ./img/portrait-desktop-320.webp 320w",
+        "src": "./img/portrait-desktop-320.webp",
+        "width": 320,
+        "height": 320
+      }
+    ]
+  }
+}

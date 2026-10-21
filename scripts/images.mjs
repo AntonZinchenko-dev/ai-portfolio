@@ -7,7 +7,8 @@
  *   focus   — точка интереса [x, y] от 0 до 1, вокруг неё режется кадр;
  *   desktop — пропорция для широких экранов, например "3:2";
  *   mobile  — пропорция для телефона, например "4:5";
- *   alt     — описание для незрячих и на случай, если картинка не загрузится.
+ *   alt     — описание для незрячих и на случай, если картинка не загрузится;
+ *   widths  — свои ширины нарезки, например [96, 192] для маленькой аватарки.
  *
  * Скрипт режет кадр под каждую пропорцию, делает AVIF и WebP нескольких ширин
  * и пишет манифест src/generated/images.json — по нему компонент <Picture>
@@ -76,7 +77,7 @@ async function main() {
     const variants = [];
     for (const plan of plans) {
       const rect = cropRect(W, H, plan.r, focus);
-      const widths = WIDTHS[plan.kind].filter((w) => w <= rect.width);
+      const widths = (conf.widths ?? WIDTHS[plan.kind]).filter((w) => w <= rect.width);
       if (!widths.length) widths.push(rect.width);
       const avif = [];
       const webp = [];

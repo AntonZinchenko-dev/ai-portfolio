@@ -1,32 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
 import { PauseIcon, PlayIcon } from '../components/Icons';
 
-export interface Chapter {
-  at: number;
-  title: string;
-}
-
 interface Props {
   name: string;
   title: string;
   label: string;
   width: number;
   height: number;
-  chapters: Chapter[];
 }
-
-const fmt = (s: number) => `0:${String(Math.floor(s)).padStart(2, '0')}`;
 
 /**
  * Витрина проекта: запись настоящего интерфейса.
- * Видео играет без звука, только пока его видно; главы перематывают к нужному месту.
- * Без JavaScript остаются обычное видео с заставкой и список глав.
+ * Видео играет без звука и только пока его видно.
+ * Без JavaScript остаётся обычное видео с заставкой.
  */
-export default function VideoShowcase({ name, title, label, width, height, chapters }: Props) {
+export default function VideoShowcase({ name, title, label, width, height }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const barRef = useRef<HTMLSpanElement>(null);
   const [playing, setPlaying] = useState(false);
-  const [active, setActive] = useState(0);
   const userPaused = useRef(false);
 
   useEffect(() => {
@@ -38,11 +29,6 @@ export default function VideoShowcase({ name, title, label, width, height, chapt
     const loop = () => {
       const d = video.duration || 1;
       if (barRef.current) barRef.current.style.transform = `scaleX(${video.currentTime / d})`;
-      let idx = 0;
-      chapters.forEach((c, i) => {
-        if (video.currentTime >= c.at) idx = i;
-      });
-      setActive((prev) => (prev === idx ? prev : idx));
       raf = requestAnimationFrame(loop);
     };
 
@@ -78,7 +64,7 @@ export default function VideoShowcase({ name, title, label, width, height, chapt
       video.removeEventListener('play', onPlay);
       video.removeEventListener('pause', onPause);
     };
-  }, [chapters]);
+  }, []);
 
   const toggle = () => {
     const video = videoRef.current;
@@ -90,15 +76,6 @@ export default function VideoShowcase({ name, title, label, width, height, chapt
       userPaused.current = true;
       video.pause();
     }
-  };
-
-  const seek = (c: Chapter, i: number) => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.currentTime = c.at + 0.05;
-    setActive(i);
-    userPaused.current = false;
-    void video.play();
   };
 
   const base = `./media/${name}`;
@@ -140,21 +117,6 @@ export default function VideoShowcase({ name, title, label, width, height, chapt
           <span ref={barRef} />
         </div>
       </div>
-      <ol className="showcase__chapters showcase__controls" aria-label="Главы записи">
-        {chapters.map((c, i) => (
-          <li key={c.at}>
-            <button
-              type="button"
-              className="showcase__chapter"
-              aria-current={i === active ? 'step' : undefined}
-              onClick={() => seek(c, i)}
-            >
-              <span className="showcase__time">{fmt(c.at)}</span>
-              {c.title}
-            </button>
-          </li>
-        ))}
-      </ol>
     </figure>
   );
 }

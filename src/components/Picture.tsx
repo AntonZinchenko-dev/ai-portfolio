@@ -32,9 +32,11 @@ interface PictureProps {
   sizes: string;
   className?: string;
   eager?: boolean;
+  /** Открывать кадр во весь экран по клику (для скриншотов) */
+  zoom?: boolean;
 }
 
-export function Picture({ name, sizes, className, eager }: PictureProps) {
+export function Picture({ name, sizes, className, eager, zoom }: PictureProps) {
   const entry = images[name];
   if (!entry) return null;
   // Последний вариант — общий запасной (без media), он же уходит в <img>.
@@ -54,6 +56,7 @@ export function Picture({ name, sizes, className, eager }: PictureProps) {
         height={fallback.height}
         loading={eager ? 'eager' : 'lazy'}
         decoding="async"
+        data-zoom={zoom ? fallback.src : undefined}
       />
     </picture>
   );

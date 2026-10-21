@@ -3,6 +3,8 @@
 Сайт выглядит цельным и без картинок: слоты, для которых нет файла, просто не выводятся.
 Картинки добавляют атмосферы в блок «Знаю, как устроены процессы» и скриншоты в кейсы.
 
+Уже добавлены: портрет (`portrait`), склад, фабрика-кухня, буровая три кадра AgentYard и три кадра Freight Intake.
+
 ## Как добавить
 
 1. Положите файл в `images/source/` с именем слота: `ops-warehouse.jpg`, `ops-kitchen.png` и т. д.
@@ -36,9 +38,8 @@
 | Слот | Что снять |
 | --- | --- |
 | `pipepass-passport` | Паспорт трубы: труба в 3D, окрашенная по сечениям, тёмная тема |
-| `freight-clarify` | Freight Intake: уточняющие вопросы по станции «Октябрьская» (есть в `docs/screenshots` репозитория) |
-| `freight-quotes` | Freight Intake: наведение на поле подсвечивает цитату |
-| `agentyard-board` | AgentYard: доска цепочек задач — когда будет интерфейс |
+| `freight-overview`, `freight-quotes`, `freight-clarify` | Freight Intake: уже нарезаны из скриншота экрана разбора |
+| `agentyard-dark`, `agentyard-plan`, `agentyard-progress` | AgentYard: уже взяты из `docs/screenshots` его репозитория |
 | `pipewiki-answer` | pipewiki: ответ со ссылками на источники |
 
 Снимайте окно браузера без вкладок и закладок, ширина 1600–1920 px.

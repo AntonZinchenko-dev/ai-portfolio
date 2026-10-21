@@ -40,11 +40,12 @@ const NAV = [
 
 const CHAINS: Record<string, Array<{ title: string; text: string; model?: boolean }>> = {
   agentyard: [
-    { title: 'Замер железа', text: 'память, видеокарта' },
-    { title: 'Подбор моделей', text: 'открытые, что потянут' },
-    { title: 'Агенты по очереди', text: 'репозиторий и цель', model: true },
-    { title: 'Доска задач', text: 'цепочки и статусы' },
-    { title: 'Журнал в PDF', text: 'для человека' },
+    { title: 'Цель', text: 'обычными словами' },
+    { title: 'План', text: 'этапы и маленькие задачи' },
+    { title: 'Агент', text: 'правка локальной моделью', model: true },
+    { title: 'Проверки', text: 'синтаксис, линтер, типы, тесты' },
+    { title: 'Разбор неудачи', text: 'следующий шаг или подсказка' },
+    { title: 'Применить', text: 'одной кнопкой, с откатом' },
   ],
   rag: [
     { title: 'Документы', text: 'вики, регламенты' },
@@ -65,11 +66,16 @@ const CHAINS: Record<string, Array<{ title: string; text: string; model?: boolea
 
 const SHOTS: Record<string, Array<{ name: string; caption: string }>> = {
   pipepass: [{ name: 'pipepass-passport', caption: 'Паспорт трубы: износ по сечениям' }],
-  agentyard: [{ name: 'agentyard-board', caption: 'Доска цепочек задач' }],
+  agentyard: [
+    { name: 'agentyard-dark', caption: 'Панель застрявшей задачи: ошибка с файлом и строкой, что пробовали, поле для подсказки' },
+    { name: 'agentyard-plan', caption: 'План: как понята цель, этапы, задачи и пакеты для установки' },
+    { name: 'agentyard-progress', caption: 'Ход работы: что каждая модель делает прямо сейчас, журнал' },
+  ],
   rag: [{ name: 'pipewiki-answer', caption: 'pipewiki: ответ со ссылками на источники' }],
   freight: [
-    { name: 'freight-clarify', caption: 'Уточняющие вопросы вместо догадок' },
-    { name: 'freight-quotes', caption: 'Наведение на поле подсвечивает цитату в документе' },
+    { name: 'freight-overview', caption: 'Экран разбора: примеры заявок, шаги, документ с цитатами, уточнения и черновик сделки' },
+    { name: 'freight-quotes', caption: 'Каждое значение подсвечено в тексте: зелёное подтверждено цитатой, оранжевое неоднозначно' },
+    { name: 'freight-clarify', caption: 'Неоднозначное становится вопросом с вариантами из справочника' },
   ],
 };
 
@@ -103,10 +109,10 @@ function Shots({ id }: { id: string }) {
   const list = (SHOTS[id] ?? []).filter((s) => hasImage(s.name));
   if (!list.length) return null;
   return (
-    <div className={`shots shots--${Math.min(list.length, 2)}`}>
+    <div className={`shots shots--${Math.min(list.length, 2)}${list.length >= 3 ? ' shots--feature' : ''}`}>
       {list.map((s) => (
         <figure className="shot" key={s.name}>
-          <Picture name={s.name} sizes="(min-width: 1240px) 440px, (min-width: 768px) 45vw, 92vw" />
+          <Picture name={s.name} sizes="(min-width: 1240px) 880px, (min-width: 768px) 70vw, 92vw" zoom />
           <figcaption>{s.caption}</figcaption>
         </figure>
       ))}
@@ -239,7 +245,10 @@ export function App({ hasResume, repoUrl }: AppProps) {
           <div className="wrap hero__grid">
             <div>
               <p className="hero__who">
-                <strong>{person.name}</strong>, {person.role}, {person.city}
+                <Picture name="portrait" className="hero__avatar" sizes="56px" eager />
+                <span>
+                  <strong>{person.name}</strong>, {person.role}, {person.city}
+                </span>
               </p>
               <h1 className="hero__title" id="hero-title">
                 {hero.title}
@@ -301,12 +310,6 @@ export function App({ hasResume, repoUrl }: AppProps) {
                   label: 'Демо-контур',
                   width: 1600,
                   height: 786,
-                  chapters: [
-                    { at: 0, title: 'Проигрывание рейса' },
-                    { at: 8, title: 'Карточка рейса' },
-                    { at: 10, title: 'Баланс времени и ROP' },
-                    { at: 13, title: '3D-ствол и компоновка' },
-                  ],
                 }}
               />
               <p className="showcase__caption">
@@ -341,11 +344,8 @@ export function App({ hasResume, repoUrl }: AppProps) {
             <CaseFoot c={flagship} />
           </article>
 
-          <div className="cases-pair">
-            <CaseCard c={agentyard} />
-            <CaseCard c={rag} />
-          </div>
-
+          <CaseCard c={agentyard} />
+          <CaseCard c={rag} />
           <CaseCard c={freight} />
 
           <h3 className="subhead" id="tools">
@@ -532,7 +532,9 @@ export function App({ hasResume, repoUrl }: AppProps) {
         </Section>
 
         <section className="contacts" id="contacts" aria-labelledby="contacts-title">
-          <div className="wrap">
+          <div className="wrap contacts__grid">
+            <Picture name="portrait" className="contacts__photo" sizes="(min-width: 768px) 160px, 112px" />
+            <div>
             <h2 className="contacts__title" id="contacts-title">
               Обсудим, какой процесс автоматизировать первым
             </h2>
@@ -558,6 +560,7 @@ export function App({ hasResume, repoUrl }: AppProps) {
                   Резюме, PDF
                 </a>
               )}
+            </div>
             </div>
           </div>
         </section>
