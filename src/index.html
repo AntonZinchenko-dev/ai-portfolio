@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Антон Зинченко — AI-инженер</title>
+    <meta name="description" content="%DESCRIPTION%" />
+    <meta name="theme-color" content="#f2f4f5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141a21" media="(prefers-color-scheme: dark)" />
+    <meta name="robots" content="%ROBOTS%" />
+    <meta name="ask-api" content="%ASK_API%" />
+    <link rel="canonical" href="%SITE_URL%" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:title" content="Антон Зинченко — AI-инженер" />
+    <meta property="og:description" content="%DESCRIPTION%" />
+    <meta property="og:url" content="%SITE_URL%" />
+    <meta property="og:image" content="%SITE_URL%og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&display=swap"
+    />
+
+    <script>
+      // Тема до первой отрисовки, чтобы страница не мигала белым в тёмной теме.
+      (function () {
+        var root = document.documentElement;
+        root.classList.add('js');
+        try {
+          var t = localStorage.getItem('theme');
+          if (t === 'light' || t === 'dark') root.dataset.theme = t;
+        } catch (e) {}
+        // Если код первого экрана не загрузился, через 4 секунды показываем поля разбора без анимации.
+        setTimeout(function () {
+          var el = document.querySelector('.intake');
+          if (el && !el.hasAttribute('data-hydrated')) el.classList.add('is-done');
+        }, 4000);
+      })();
+    </script>
+    <link rel="stylesheet" href="%CSS%" />
+    <script type="module" src="%JS%"></script>
+    <script type="application/ld+json">%JSONLD%</script>
+  </head>
+  <body>
+    <div id="root">%APP%</div>
+  </body>
+</html>

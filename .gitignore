@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.cache/
+e2e/screens/
+__pycache__/
+*.pyc
+.venv/
+.env
+# Исходник видео тяжёлый; на сайт идут пережатые файлы из public/media
+media/source/
