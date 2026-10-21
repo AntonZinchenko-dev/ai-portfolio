@@ -74,6 +74,11 @@ const SHOTS: Record<string, Array<{ name: string; caption: string }>> = {
     { name: 'agentyard-progress', caption: 'Ход работы: что каждая модель делает прямо сейчас, журнал' },
   ],
   rag: [{ name: 'pipewiki-answer', caption: 'pipewiki: ответ со ссылками на источники' }],
+  kobo: [
+    { name: 'kobo-home', caption: 'Главная магазина' },
+    { name: 'kobo-builder', caption: 'Конструктор: превью и цена меняются сразу, сборкой можно поделиться ссылкой' },
+    { name: 'kobo-login', caption: 'Вход без пароля и кнопка демо-аккаунта для проверяющего' },
+  ],
   freight: [
     { name: 'freight-overview', caption: 'Экран разбора: примеры заявок, шаги, документ с цитатами, уточнения и черновик сделки' },
     { name: 'freight-quotes', caption: 'Каждое значение подсвечено в тексте: зелёное подтверждено цитатой, оранжевое неоднозначно' },

@@ -1,14 +1,69 @@
 import { irisHue, isDark, prefersReducedMotion, seeded } from './iris';
 
 /**
- * Фон по краям страницы: треугольники медленно всплывают и вращаются в полях
- * слева и справа от текста. Ближние (крупные) сильнее сдвигаются при прокрутке,
- * а быстрая прокрутка ненадолго раскручивает их. К центру фон гаснет маской,
- * поэтому тексту не мешает. Кадры не рисуются, когда вкладка скрыта.
+ * Фон по краям страницы: каркасные многогранники (тетраэдры, октаэдры,
+ * икосаэдры) из тонких переливающихся линий — полигональная графика.
+ * Они медленно всплывают и вращаются в трёх осях в полях слева и справа от
+ * текста. Ближние сильнее сдвигаются при прокрутке, быстрая прокрутка ненадолго
+ * раскручивает их. К центру фон гаснет маской, поэтому тексту не мешает.
+ * Кадры не рисуются, когда вкладка скрыта.
  */
 
 const CONTENT = 1176; // ширина колонки текста
 const MIN_SIDE = 64; // уже — фон не показываем
+
+type V3 = [number, number, number];
+interface Mesh {
+  v: V3[];
+  e: Array<[number, number]>;
+}
+
+/** Рёбра — пары вершин на минимальном расстоянии друг от друга */
+function mesh(v: V3[]): Mesh {
+  const len = Math.hypot(...v[0]!);
+  const norm = v.map((p) => p.map((c) => c / len) as V3);
+  let min = Infinity;
+  const d = (a: V3, b: V3) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+  for (let i = 0; i < norm.length; i++) for (let j = i + 1; j < norm.length; j++) min = Math.min(min, d(norm[i]!, norm[j]!));
+  const e: Mesh['e'] = [];
+  for (let i = 0; i < norm.length; i++)
+    for (let j = i + 1; j < norm.length; j++) if (d(norm[i]!, norm[j]!) < min * 1.01) e.push([i, j]);
+  return { v: norm, e };
+}
+
+const PHI = (1 + Math.sqrt(5)) / 2;
+const MESHES: Mesh[] = [
+  mesh([
+    [1, 1, 1],
+    [1, -1, -1],
+    [-1, 1, -1],
+    [-1, -1, 1],
+  ]),
+  mesh([
+    [1, 0, 0],
+    [-1, 0, 0],
+    [0, 1, 0],
+    [0, -1, 0],
+    [0, 0, 1],
+    [0, 0, -1],
+  ]),
+  mesh(
+    [
+      [0, 1, PHI],
+      [0, 1, -PHI],
+      [0, -1, PHI],
+      [0, -1, -PHI],
+      [1, PHI, 0],
+      [1, -PHI, 0],
+      [-1, PHI, 0],
+      [-1, -PHI, 0],
+      [PHI, 0, 1],
+      [PHI, 0, -1],
+      [-PHI, 0, 1],
+      [-PHI, 0, -1],
+    ] as V3[],
+  ),
+];
 
 interface Shard {
   side: -1 | 1;
@@ -17,12 +72,11 @@ interface Shard {
   y: number;
   size: number;
   z: number;
-  rot: number;
-  vr: number;
+  rot: V3;
+  vr: V3;
   vy: number;
   phase: number;
-  outline: boolean;
-  shape: [number, number, number, number, number, number];
+  mesh: Mesh;
 }
 
 export function setupEdges() {
@@ -35,27 +89,20 @@ export function setupEdges() {
 
   const reduce = prefersReducedMotion();
   const rnd = seeded(11);
-  const shards: Shard[] = Array.from({ length: 46 }, (_, i) => {
+  const shards: Shard[] = Array.from({ length: 26 }, (_, i) => {
     const z = 0.25 + rnd() * 0.75;
-    // Неправильные треугольники выглядят живее равносторонних
-    const a = rnd() * Math.PI * 2;
-    const pts = [0, 1, 2].flatMap((k) => {
-      const ang = a + (k * Math.PI * 2) / 3 + (rnd() - 0.5) * 0.9;
-      const r = 0.7 + rnd() * 0.5;
-      return [Math.cos(ang) * r, Math.sin(ang) * r];
-    }) as Shard['shape'];
+    const r = rnd();
     return {
       side: i % 2 ? 1 : -1,
       u: rnd(),
       y: rnd(),
-      size: 10 + z * 46 + rnd() * 18,
+      size: 14 + z * 40 + rnd() * 14,
       z,
-      rot: rnd() * Math.PI * 2,
-      vr: (rnd() - 0.5) * 0.5,
+      rot: [rnd() * 6.3, rnd() * 6.3, rnd() * 6.3],
+      vr: [(rnd() - 0.5) * 0.5, (rnd() - 0.5) * 0.6, (rnd() - 0.5) * 0.3],
       vy: 0.006 + rnd() * 0.012,
       phase: rnd() * 10,
-      outline: rnd() < 0.32,
-      shape: pts,
+      mesh: MESHES[r < 0.35 ? 0 : r < 0.65 ? 1 : 2]!,
     };
   });
 
@@ -92,7 +139,10 @@ export function setupEdges() {
       if (!reduce) {
         s.y -= s.vy * s.z * dt;
         if (s.y < -0.15) s.y += 1.3;
-        s.rot += s.vr * dt * (1 + boost * s.z * 3);
+        const spin = dt * (1 + boost * s.z * 3);
+        s.rot[0] += s.vr[0] * spin;
+        s.rot[1] += s.vr[1] * spin;
+        s.rot[2] += s.vr[2] * spin;
       }
       const x = s.side < 0 ? s.u * band - 20 : w - s.u * band + 20;
       // Параллакс: ближние сдвигаются при прокрутке сильнее
@@ -100,31 +150,41 @@ export function setupEdges() {
       let y = (s.y * span - scroll * s.z * 0.35) % span;
       if (y < 0) y += span;
       y -= 120;
-      const hue = irisHue(x, y + scroll * 0.2, t, s.phase);
-      const r = s.size;
-      const cs = Math.cos(s.rot) * r;
-      const sn = Math.sin(s.rot) * r;
-      const p = s.shape;
-      ctx!.beginPath();
-      for (let k = 0; k < 3; k++) {
-        const px = x + p[k * 2]! * cs - p[k * 2 + 1]! * sn;
-        const py = y + p[k * 2]! * sn + p[k * 2 + 1]! * cs;
-        if (k === 0) ctx!.moveTo(px, py);
-        else ctx!.lineTo(px, py);
-      }
-      ctx!.closePath();
-      const alpha = (dark ? 0.18 : 0.16) + s.z * (dark ? 0.42 : 0.34);
-      const l = dark ? 58 : 46;
-      if (s.outline) {
-        ctx!.lineWidth = 1.2 + s.z;
-        ctx!.strokeStyle = `hsla(${hue}, 78%, ${l}%, ${alpha})`;
+      const [ax, ay, az] = s.rot;
+      const ca = Math.cos(ax), sa = Math.sin(ax), cb = Math.cos(ay), sb = Math.sin(ay), cc = Math.cos(az), sc = Math.sin(az);
+      // Поворот в трёх осях и лёгкая перспектива
+      const pts = s.mesh.v.map(([vx, vy, vz]) => {
+        let y1 = vy * ca - vz * sa;
+        let z1 = vy * sa + vz * ca;
+        const x2 = vx * cb + z1 * sb;
+        z1 = -vx * sb + z1 * cb;
+        const x3 = x2 * cc - y1 * sc;
+        y1 = x2 * sc + y1 * cc;
+        const k = 3 / (3 + z1);
+        return [x + x3 * s.size * k, y + y1 * s.size * k, z1] as V3;
+      });
+      const alpha = (dark ? 0.22 : 0.2) + s.z * (dark ? 0.5 : 0.42);
+      const l = dark ? 62 : 44;
+      ctx!.lineWidth = 0.8 + s.z * 0.9;
+      ctx!.lineCap = 'round';
+      s.mesh.e.forEach(([i, j], n) => {
+        const p = pts[i]!;
+        const q = pts[j]!;
+        // Задние рёбра бледнее — так читается объём
+        const front = 0.35 + 0.65 * (1 - (p[2] + q[2] + 2) / 4);
+        const hue = irisHue((p[0] + q[0]) / 2, (p[1] + q[1]) / 2 + scroll * 0.2, t, s.phase + n * 0.4);
+        ctx!.strokeStyle = `hsla(${hue.toFixed(1)}, 80%, ${l}%, ${(alpha * front).toFixed(3)})`;
+        ctx!.beginPath();
+        ctx!.moveTo(p[0], p[1]);
+        ctx!.lineTo(q[0], q[1]);
         ctx!.stroke();
-      } else {
-        // Переливание: градиент поперёк грани, два соседних оттенка
-        const g = ctx!.createLinearGradient(x - r, y - r, x + r, y + r);
-        g.addColorStop(0, `hsla(${hue - 30}, 80%, ${l + 8}%, ${alpha})`);
-        g.addColorStop(1, `hsla(${hue + 40}, 75%, ${l - 6}%, ${alpha * 0.7})`);
-        ctx!.fillStyle = g;
+      });
+      // Узлы сетки — маленькие точки на передних вершинах
+      for (const p of pts) {
+        if (p[2] > 0.2) continue;
+        ctx!.fillStyle = `hsla(${irisHue(p[0], p[1], t, s.phase).toFixed(1)}, 85%, ${l + 10}%, ${alpha})`;
+        ctx!.beginPath();
+        ctx!.arc(p[0], p[1], 1.1 + s.z * 1.2, 0, Math.PI * 2);
         ctx!.fill();
       }
     }
