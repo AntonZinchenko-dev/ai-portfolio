@@ -90,6 +90,19 @@
       }
     ]
   },
+  "kobo-catalog": {
+    "alt": "KŌBŌ Keys: каталог — фильтры по раскладке и свитчам, карточки клавиатур Sakura 65, Neon Tokyo 60 и Matcha 75 с ценой и рейтингом",
+    "variants": [
+      {
+        "media": null,
+        "avif": "./img/kobo-catalog-desktop-640.avif 640w, ./img/kobo-catalog-desktop-960.avif 960w, ./img/kobo-catalog-desktop-1440.avif 1440w, ./img/kobo-catalog-desktop-1920.avif 1920w",
+        "webp": "./img/kobo-catalog-desktop-640.webp 640w, ./img/kobo-catalog-desktop-960.webp 960w, ./img/kobo-catalog-desktop-1440.webp 1440w, ./img/kobo-catalog-desktop-1920.webp 1920w",
+        "src": "./img/kobo-catalog-desktop-1920.webp",
+        "width": 1920,
+        "height": 1200
+      }
+    ]
+  },
   "kobo-home": {
     "alt": "KŌBŌ Keys: главная магазина — заголовок, кнопки «Смотреть каталог» и «Собрать свою», разобранная клавиатура в лепестках сакуры",
     "variants": [
@@ -98,19 +111,6 @@
         "avif": "./img/kobo-home-desktop-640.avif 640w, ./img/kobo-home-desktop-960.avif 960w, ./img/kobo-home-desktop-1440.avif 1440w, ./img/kobo-home-desktop-1920.avif 1920w",
         "webp": "./img/kobo-home-desktop-640.webp 640w, ./img/kobo-home-desktop-960.webp 960w, ./img/kobo-home-desktop-1440.webp 1440w, ./img/kobo-home-desktop-1920.webp 1920w",
         "src": "./img/kobo-home-desktop-1920.webp",
-        "width": 1920,
-        "height": 1200
-      }
-    ]
-  },
-  "kobo-login": {
-    "alt": "KŌBŌ Keys: экран входа без пароля — почта, код и кнопка «Войти в демо-аккаунт»",
-    "variants": [
-      {
-        "media": null,
-        "avif": "./img/kobo-login-desktop-640.avif 640w, ./img/kobo-login-desktop-960.avif 960w, ./img/kobo-login-desktop-1440.avif 1440w, ./img/kobo-login-desktop-1920.avif 1920w",
-        "webp": "./img/kobo-login-desktop-640.webp 640w, ./img/kobo-login-desktop-960.webp 960w, ./img/kobo-login-desktop-1440.webp 1440w, ./img/kobo-login-desktop-1920.webp 1920w",
-        "src": "./img/kobo-login-desktop-1920.webp",
         "width": 1920,
         "height": 1200
       }

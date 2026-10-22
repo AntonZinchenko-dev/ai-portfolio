@@ -50,14 +50,11 @@ export function buildCorpus(): Fragment[] {
   for (const w of commercial) add(`work-${w.id}`, 'work', `${w.title}, ${w.company}`, `${w.task} ${w.result}`);
   for (const f of fit) add(`fit-${f.id}`, 'fit', f.requirement, f.evidence);
   for (const p of processes) {
-    add(
-      `process-${p.id}`,
-      'processes',
-      p.mine,
-      `${p.mine} (${p.source}). У вас это ${p.theirs.toLowerCase()}. Пилот, который я бы проверил: ${p.pilot.toLowerCase()}.`,
-    );
+    add(`process-${p.id}`, 'processes', p.task, `${p.task}. Что можно собрать как MVP: ${p.mvp} На что опираюсь: ${p.basis}`);
   }
-  approach.forEach((s, i) => add(`approach-${i}`, 'approach', s.title, `${s.text} Пример: ${s.example}`));
+  approach.forEach((s, i) =>
+    add(`approach-${i}`, 'approach', s.title, `Обычный продукт: ${s.product} Продукт с ИИ: ${s.ai}`),
+  );
   for (const g of stack) {
     add(
       `stack-${g.group}`,

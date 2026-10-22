@@ -1,4 +1,5 @@
 import { irisHue, isDark, prefersReducedMotion, seeded } from './iris';
+import { MESHES, rotate, type Mesh, type V3 } from './poly';
 
 /**
  * Фон по краям страницы: каркасные многогранники (тетраэдры, октаэдры,
@@ -11,59 +12,6 @@ import { irisHue, isDark, prefersReducedMotion, seeded } from './iris';
 
 const CONTENT = 1176; // ширина колонки текста
 const MIN_SIDE = 64; // уже — фон не показываем
-
-type V3 = [number, number, number];
-interface Mesh {
-  v: V3[];
-  e: Array<[number, number]>;
-}
-
-/** Рёбра — пары вершин на минимальном расстоянии друг от друга */
-function mesh(v: V3[]): Mesh {
-  const len = Math.hypot(...v[0]!);
-  const norm = v.map((p) => p.map((c) => c / len) as V3);
-  let min = Infinity;
-  const d = (a: V3, b: V3) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
-  for (let i = 0; i < norm.length; i++) for (let j = i + 1; j < norm.length; j++) min = Math.min(min, d(norm[i]!, norm[j]!));
-  const e: Mesh['e'] = [];
-  for (let i = 0; i < norm.length; i++)
-    for (let j = i + 1; j < norm.length; j++) if (d(norm[i]!, norm[j]!) < min * 1.01) e.push([i, j]);
-  return { v: norm, e };
-}
-
-const PHI = (1 + Math.sqrt(5)) / 2;
-const MESHES: Mesh[] = [
-  mesh([
-    [1, 1, 1],
-    [1, -1, -1],
-    [-1, 1, -1],
-    [-1, -1, 1],
-  ]),
-  mesh([
-    [1, 0, 0],
-    [-1, 0, 0],
-    [0, 1, 0],
-    [0, -1, 0],
-    [0, 0, 1],
-    [0, 0, -1],
-  ]),
-  mesh(
-    [
-      [0, 1, PHI],
-      [0, 1, -PHI],
-      [0, -1, PHI],
-      [0, -1, -PHI],
-      [1, PHI, 0],
-      [1, -PHI, 0],
-      [-1, PHI, 0],
-      [-1, -PHI, 0],
-      [PHI, 0, 1],
-      [PHI, 0, -1],
-      [-PHI, 0, 1],
-      [-PHI, 0, -1],
-    ] as V3[],
-  ),
-];
 
 interface Shard {
   side: -1 | 1;
@@ -150,20 +98,17 @@ export function setupEdges() {
       let y = (s.y * span - scroll * s.z * 0.35) % span;
       if (y < 0) y += span;
       y -= 120;
-      const [ax, ay, az] = s.rot;
-      const ca = Math.cos(ax), sa = Math.sin(ax), cb = Math.cos(ay), sb = Math.sin(ay), cc = Math.cos(az), sc = Math.sin(az);
-      // Поворот в трёх осях и лёгкая перспектива
-      const pts = s.mesh.v.map(([vx, vy, vz]) => {
-        let y1 = vy * ca - vz * sa;
-        let z1 = vy * sa + vz * ca;
-        const x2 = vx * cb + z1 * sb;
-        z1 = -vx * sb + z1 * cb;
-        const x3 = x2 * cc - y1 * sc;
-        y1 = x2 * sc + y1 * cc;
-        const k = 3 / (3 + z1);
-        return [x + x3 * s.size * k, y + y1 * s.size * k, z1] as V3;
+      const pts = s.mesh.v.map((v) => {
+        const [x3, y3, z3] = rotate(v, s.rot);
+        const k = 3 / (3 + z3);
+        return [x + x3 * s.size * k, y + y3 * s.size * k, z3] as V3;
       });
-      const alpha = (dark ? 0.22 : 0.2) + s.z * (dark ? 0.5 : 0.42);
+      // Плавно гаснут у краёв экрана (под шапкой и у нижней кромки), а не обрываются,
+      // и время от времени сами медленно растворяются и проявляются снова
+      const edgeFade = Math.min(1, Math.max(0, (y - 64) / 140)) * Math.min(1, Math.max(0, (h - y) / 140));
+      const life = reduce ? 1 : 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(t * (0.12 + s.z * 0.08) + s.phase));
+      const alpha = ((dark ? 0.22 : 0.2) + s.z * (dark ? 0.5 : 0.42)) * edgeFade * life;
+      if (alpha < 0.01) continue;
       const l = dark ? 62 : 44;
       ctx!.lineWidth = 0.8 + s.z * 0.9;
       ctx!.lineCap = 'round';

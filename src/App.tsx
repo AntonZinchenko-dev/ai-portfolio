@@ -58,8 +58,8 @@ const CHAINS: Record<string, Array<{ title: string; text: string; model?: boolea
   ],
   freight: [
     { title: 'Чтение', text: 'txt, eml, docx, pdf, xlsx' },
-    { title: 'Извлечение', text: 'JSON-схема, t = 0', model: true },
-    { title: 'Проверка цитат', text: 'нет цитаты — не подтверждено' },
+    { title: 'Извлечение', text: 'по JSON-схеме, t\u00a0=\u00a00', model: true },
+    { title: 'Проверка цитат', text: 'значение без цитаты отклоняется' },
     { title: 'Справочники', text: 'станции, грузы, правила' },
     { title: 'Вопросы', text: 'варианты из справочника' },
     { title: 'Черновик сделки', text: 'подтверждает человек' },
@@ -77,7 +77,7 @@ const SHOTS: Record<string, Array<{ name: string; caption: string }>> = {
   kobo: [
     { name: 'kobo-home', caption: 'Главная магазина' },
     { name: 'kobo-builder', caption: 'Конструктор: превью и цена меняются сразу, сборкой можно поделиться ссылкой' },
-    { name: 'kobo-login', caption: 'Вход без пароля и кнопка демо-аккаунта для проверяющего' },
+    { name: 'kobo-catalog', caption: 'Каталог: счётчики фильтров учитывают остальные фильтры, состояние — в адресе страницы' },
   ],
   freight: [
     { name: 'freight-overview', caption: 'Экран разбора: примеры заявок, шаги, документ с цитатами, уточнения и черновик сделки' },
@@ -396,8 +396,8 @@ export function App({ hasResume, repoUrl }: AppProps) {
 
         <Section
           id="processes"
-          title="Знаю, как устроены процессы"
-          intro="Что я делал в системах, где похожий процесс есть у сети кухонь и магазинов, и какую идею я бы первой проверил как MVP."
+          title="Что я бы проверил у вас"
+          intro="Идеи для сети кухонь и магазинов — со стороны, до разговора с командой. У каждой подписано, на какой мой опыт она опирается."
         >
           {opsPhotos.length > 0 && (
             <div className="ops-photos">
@@ -412,29 +412,30 @@ export function App({ hasResume, repoUrl }: AppProps) {
           <table className="bridge">
             <thead>
               <tr>
-                <th scope="col">Что я делал</th>
-                <th scope="col">Где это у вас</th>
-                <th scope="col">Пилот, который я бы проверил</th>
+                <th scope="col">Задача у вас</th>
+                <th scope="col">Что можно собрать как MVP</th>
+                <th scope="col">На что опираюсь</th>
               </tr>
             </thead>
             <tbody>
               {processes.map((p) => (
                 <tr key={p.id}>
-                  <td data-label="Что я делал">
-                    {p.mine}
-                    <small>{p.source}</small>
+                  <td data-label="Задача у вас" className="bridge__task">
+                    {p.task}
                   </td>
-                  <td data-label="Где это у вас">{p.theirs}</td>
-                  <td data-label="Пилот" className="bridge__pilot">
-                    {p.pilot}
+                  <td data-label="Что можно собрать как MVP" className="bridge__pilot">
+                    {p.mvp}
+                  </td>
+                  <td data-label="На что опираюсь" className="bridge__basis">
+                    {p.basis}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
           <p className="bridge-note">
-            Пилоты — гипотезы со стороны. Какой из них нужен на самом деле, решается после разговора с теми, кто делает
-            эту работу каждый день.
+            Это гипотезы. Какая из них нужна на самом деле, решается после разговора с теми, кто делает эту работу
+            каждый день.
           </p>
         </Section>
 
@@ -460,17 +461,30 @@ export function App({ hasResume, repoUrl }: AppProps) {
         <Section
           id="approach"
           title="От идеи до продукта"
-          intro="Как идея становится MVP, а MVP — продуктом, которым пользуются. У каждого шага — пример из моих проектов."
+          intro="Путь один и тот же, но у продукта с ИИ на каждом этапе своя работа: набор примеров, проверка модели, запасной путь."
         >
-          <ol className="steps">
-            {approach.map((s) => (
-              <li className="step" key={s.title}>
-                <h3>{s.title}</h3>
-                <p>{s.text}</p>
-                <p className="step__example">{s.example}</p>
-              </li>
-            ))}
-          </ol>
+          <table className="bridge tracks">
+            <thead>
+              <tr>
+                <th scope="col">Этап</th>
+                <th scope="col">Обычный продукт</th>
+                <th scope="col">Продукт с ИИ</th>
+              </tr>
+            </thead>
+            <tbody>
+              {approach.map((s) => (
+                <tr key={s.title}>
+                  <th scope="row" className="tracks__stage">
+                    {s.title}
+                  </th>
+                  <td data-label="Обычный продукт">{s.product}</td>
+                  <td data-label="Продукт с ИИ" className="tracks__ai">
+                    {s.ai}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </Section>
 
         <Section

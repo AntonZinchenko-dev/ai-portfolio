@@ -64,6 +64,9 @@ for (const vp of [
   await page.locator('.evo__step').nth(2).click();
   check((await page.locator('.evo__step.is-active .evo__name').innerText()) === 'Продукт', 'этапы анимации переключаются по клику');
 
+  const mode = await page.locator('.evo').getAttribute('data-mode');
+  check(mode === 'poly' || mode === 'tags', `вариант анимации выбран (${mode})`);
+
   await page.locator('#freight').scrollIntoViewIfNeeded();
   await page.waitForSelector('.intake[data-hydrated]', { timeout: 8000 });
   check(true, 'демо разбора заявки ожило в кейсе Freight Intake');

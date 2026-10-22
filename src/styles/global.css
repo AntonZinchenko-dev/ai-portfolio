@@ -25,12 +25,17 @@
   --viz-text: #5a6472;
 
   --font: 'Onest', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --step--1: 0.875rem;
-  --step-0: 1.0625rem;
-  --step-1: 1.25rem;
-  --step-2: 1.5625rem;
-  --step-3: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
-  --step-4: clamp(2.125rem, 1.5rem + 2.6vw, 3.5rem);
+  /* Во всём сайте три кегля: мелкий (подписи, метки), основной (текст, подзаголовки)
+     и крупный (заголовки разделов и первого экрана). Ступени ниже — псевдонимы на них. */
+  --fs-s: 0.875rem;
+  --fs-m: 1.0625rem;
+  --fs-l: clamp(2rem, 1.4rem + 2vw, 2.875rem);
+  --step--1: var(--fs-s);
+  --step-0: var(--fs-m);
+  --step-1: var(--fs-m);
+  --step-2: var(--fs-m);
+  --step-3: var(--fs-l);
+  --step-4: var(--fs-l);
 
   --gutter: 16px;
   --radius-s: 6px;
@@ -341,7 +346,7 @@ button {
   border-radius: var(--radius-s);
   color: var(--graphite);
   text-decoration: none;
-  font-size: 0.9375rem;
+  font-size: var(--fs-s);
 }
 
 .header__nav a:hover {
@@ -369,7 +374,7 @@ button {
 .header__tg {
   min-height: 38px;
   padding: 0 14px;
-  font-size: 0.9375rem;
+  font-size: var(--fs-s);
 }
 
 .theme-toggle {
@@ -557,7 +562,7 @@ button {
 
 .intake__msg {
   padding: 16px;
-  font-size: 0.96875rem;
+  font-size: var(--fs-s);
   line-height: 1.65;
   border-bottom: 1px solid var(--rule);
 }
@@ -603,7 +608,7 @@ button {
   gap: 12px;
   align-items: baseline;
   padding: 9px 16px;
-  font-size: 0.9375rem;
+  font-size: var(--fs-s);
   border-bottom: 1px solid var(--rule);
   transition: opacity 0.3s, transform 0.3s, background-color 0.2s;
 }
@@ -623,7 +628,7 @@ button {
 }
 
 .intake__status {
-  font-size: 0.8125rem;
+  font-size: var(--fs-s);
   white-space: nowrap;
 }
 
@@ -676,7 +681,7 @@ button {
 
 @media (min-width: 1024px) {
   .section__grid {
-    grid-template-columns: 260px minmax(0, 1fr);
+    grid-template-columns: clamp(270px, 26vw, 340px) minmax(0, 1fr);
     gap: 48px;
   }
 
@@ -692,12 +697,15 @@ button {
   line-height: 1.15;
   font-weight: 600;
   letter-spacing: -0.02em;
+  /* Длинное слово крупным кеглем не вылезает в соседнюю колонку, а переносится по слогам */
+  hyphens: auto;
+  overflow-wrap: break-word;
 }
 
 .section__intro {
   margin-top: 12px;
   color: var(--graphite);
-  font-size: 0.96875rem;
+  font-size: var(--fs-s);
   line-height: 1.55;
   max-width: 46ch;
 }
@@ -852,7 +860,7 @@ button {
 }
 
 .case__facts dd {
-  font-size: 0.8125rem;
+  font-size: var(--fs-s);
   color: var(--graphite);
   line-height: 1.45;
 }
@@ -870,7 +878,7 @@ button {
   align-items: center;
   gap: 12px 20px;
   margin-top: 20px;
-  font-size: 0.9375rem;
+  font-size: var(--fs-s);
 }
 
 .case__note {
@@ -899,127 +907,7 @@ button {
   margin-top: 0;
 }
 
-/* ---------- Схема цепочки ---------- */
-.chain {
-  margin-top: 24px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.chain ol {
-  display: flex;
-  gap: 0;
-  list-style: none;
-  min-width: 640px;
-}
-
-.chain li {
-  flex: 1;
-  position: relative;
-  padding: 12px 14px;
-  border: 1px solid var(--rule);
-  background: var(--paper);
-  font-size: 0.875rem;
-  line-height: 1.4;
-}
-
-.chain li + li {
-  margin-left: 18px;
-}
-
-.chain li + li::before {
-  content: '';
-  position: absolute;
-  left: -18px;
-  top: 50%;
-  width: 18px;
-  height: 1px;
-  background: var(--rule-strong);
-}
-
-.chain li:first-child {
-  border-radius: var(--radius-m) 0 0 var(--radius-m);
-}
-
-.chain li:last-child {
-  border-radius: 0 var(--radius-m) var(--radius-m) 0;
-}
-
-.chain li strong {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 2px;
-}
-
-.chain li span {
-  color: var(--graphite);
-}
-
-.chain li.is-model {
-  border-color: var(--amber);
-  background: var(--amber-tint);
-}
-
-/* В узкой карточке схема идёт сверху вниз, а не уезжает вбок. */
-@container (max-width: 620px) {
-  .chain {
-    overflow: visible;
-  }
-
-  .chain ol {
-    flex-direction: column;
-    min-width: 0;
-  }
-
-  .chain li {
-    display: flex;
-    gap: 8px;
-    align-items: baseline;
-    padding: 9px 12px;
-  }
-
-  .chain li strong {
-    display: inline;
-    margin: 0;
-  }
-
-  .chain li + li {
-    margin-left: 0;
-    margin-top: 12px;
-  }
-
-  .chain li + li::before {
-    left: 24px;
-    top: -12px;
-    width: 1px;
-    height: 12px;
-  }
-
-  .chain li:first-child {
-    border-radius: var(--radius-m) var(--radius-m) 0 0;
-  }
-
-  .chain li:last-child {
-    border-radius: 0 0 var(--radius-m) var(--radius-m);
-  }
-}
-
-.chain__legend {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 10px;
-  font-size: 0.8125rem;
-  color: var(--graphite);
-}
-
-.chain__legend i {
-  width: 12px;
-  height: 12px;
-  border-radius: 3px;
-  border: 1px solid var(--amber);
-  background: var(--amber-tint);
-}
+/* ---------- Схема цепочки — см. блок «Конвейер» в конце файла ---------- */
 
 /* ---------- Картинки ---------- */
 .shot {
@@ -1101,7 +989,7 @@ button {
 .tool__links {
   display: flex;
   gap: 16px;
-  font-size: 0.9375rem;
+  font-size: var(--fs-s);
   white-space: nowrap;
 }
 
@@ -1129,7 +1017,7 @@ button {
   background: transparent;
   padding: 7px 12px;
   border-radius: var(--radius-s);
-  font-size: 0.9375rem;
+  font-size: var(--fs-s);
   color: var(--graphite);
   cursor: pointer;
 }
@@ -1207,7 +1095,7 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-size: 0.8125rem;
+  font-size: var(--fs-s);
   color: var(--graphite);
   white-space: nowrap;
 }
@@ -1260,14 +1148,14 @@ button {
 
 .ops-photos figcaption {
   padding: 8px 2px 0;
-  font-size: 0.8125rem;
+  font-size: var(--fs-s);
   color: var(--graphite);
 }
 
 .bridge {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9375rem;
+  font-size: var(--fs-s);
 }
 
 .bridge th {
@@ -1290,7 +1178,7 @@ button {
 .bridge td small {
   display: block;
   color: var(--graphite);
-  font-size: 0.8125rem;
+  font-size: var(--fs-s);
   margin-top: 2px;
 }
 
@@ -1327,7 +1215,7 @@ button {
   .bridge td::before {
     content: attr(data-label);
     display: block;
-    font-size: 0.75rem;
+    font-size: var(--fs-s);
     color: var(--graphite);
     margin-top: 8px;
   }
@@ -1433,28 +1321,28 @@ button {
   height: 30px;
   border-radius: 50%;
   border: 1px solid var(--rule-strong);
-  font-size: 0.875rem;
+  font-size: var(--fs-s);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   margin-bottom: 14px;
 }
 
 .step h3 {
-  font-size: 1.0625rem;
+  font-size: var(--fs-m);
   font-weight: 600;
   margin-bottom: 6px;
 }
 
 .step p {
   color: var(--graphite);
-  font-size: 0.96875rem;
+  font-size: var(--fs-s);
   line-height: 1.55;
 }
 
 .step__example {
   margin-top: 10px !important;
   color: var(--ink) !important;
-  font-size: 0.9375rem !important;
+  font-size: var(--fs-s) !important;
 }
 
 .step__example::before {
@@ -1485,7 +1373,7 @@ button {
   background: var(--paper);
   border-radius: 999px;
   padding: 6px 14px;
-  font-size: 0.9375rem;
+  font-size: var(--fs-s);
   cursor: pointer;
   text-align: left;
   line-height: 1.4;
@@ -1519,7 +1407,7 @@ button {
   background: var(--paper);
   color: var(--ink);
   font: inherit;
-  font-size: 0.96875rem;
+  font-size: var(--fs-s);
 }
 
 .ask__input::placeholder {
@@ -1546,7 +1434,7 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.8125rem;
+  font-size: var(--fs-s);
   color: var(--graphite);
   margin-bottom: 12px;
 }
@@ -1601,7 +1489,7 @@ button {
   border-radius: 0 var(--radius-s) var(--radius-s) 0;
   padding: 10px 12px;
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: var(--fs-s);
   line-height: 1.45;
 }
 
@@ -1652,7 +1540,7 @@ button {
 }
 
 .stack h3 {
-  font-size: 1.0625rem;
+  font-size: var(--fs-m);
   font-weight: 600;
   padding-bottom: 10px;
   border-bottom: 1px solid var(--rule-strong);
@@ -1668,14 +1556,14 @@ button {
   gap: 10px;
   padding: 9px 0;
   border-bottom: 1px solid var(--rule);
-  font-size: 0.96875rem;
+  font-size: var(--fs-s);
   line-height: 1.4;
 }
 
 .stack li small {
   display: block;
   color: var(--graphite);
-  font-size: 0.8125rem;
+  font-size: var(--fs-s);
   margin-top: 1px;
 }
 
@@ -1743,7 +1631,7 @@ button {
 .timeline__period {
   font-variant-numeric: tabular-nums;
   color: var(--graphite);
-  font-size: 0.9375rem;
+  font-size: var(--fs-s);
 }
 
 .timeline__place {
@@ -1758,7 +1646,7 @@ button {
 .timeline__text {
   margin-top: 4px;
   color: var(--graphite);
-  font-size: 0.96875rem;
+  font-size: var(--fs-s);
 }
 
 .timeline li:first-child .timeline__period {
@@ -1923,7 +1811,7 @@ button {
   gap: 12px;
   padding: 10px 14px;
   border-bottom: 1px solid var(--console-line);
-  font-size: 0.8125rem;
+  font-size: var(--fs-s);
   color: var(--console-text);
 }
 
@@ -2078,116 +1966,6 @@ button {
 }
 
 /* ==========================================================
-   «Пакет данных» бежит по шагам цепочки
-   ========================================================== */
-.chain ol {
-  --step-t: 0.55s;
-  --cycle: calc(var(--n, 5) * var(--step-t) + 1.8s);
-}
-
-.chain li + li::after {
-  content: '';
-  position: absolute;
-  left: -18px;
-  top: calc(50% - 3px);
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--petrol);
-  opacity: 0;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .chain.is-live li {
-    animation: chain-pass var(--cycle) infinite both;
-    animation-delay: calc(var(--i) * var(--step-t));
-  }
-
-  .chain.is-live li.is-model {
-    animation-name: chain-pass-model;
-  }
-
-  .chain.is-live li + li::after {
-    animation: chain-dot var(--cycle) infinite both;
-    animation-delay: calc((var(--i) - 0.4) * var(--step-t));
-  }
-}
-
-@keyframes chain-pass {
-  0%,
-  100% {
-    transform: none;
-  }
-  4% {
-    transform: translateY(-2px);
-    border-color: var(--petrol);
-    box-shadow: 0 6px 16px -10px var(--petrol);
-  }
-  12% {
-    transform: none;
-  }
-}
-
-@keyframes chain-pass-model {
-  0%,
-  100% {
-    box-shadow: none;
-  }
-  5%,
-  14% {
-    box-shadow: 0 0 0 4px var(--amber-tint), 0 8px 22px -12px var(--amber);
-  }
-  24% {
-    box-shadow: none;
-  }
-}
-
-@keyframes chain-dot {
-  0% {
-    opacity: 0;
-    transform: translateX(0);
-  }
-  1% {
-    opacity: 1;
-  }
-  7% {
-    opacity: 1;
-    transform: translateX(12px);
-  }
-  8%,
-  100% {
-    opacity: 0;
-    transform: translateX(12px);
-  }
-}
-
-@container (max-width: 620px) {
-  .chain li + li::after {
-    left: 21px;
-    top: -12px;
-  }
-
-  @keyframes chain-dot {
-    0% {
-      opacity: 0;
-      transform: translateY(0);
-    }
-    1% {
-      opacity: 1;
-    }
-    7% {
-      opacity: 1;
-      transform: translateY(8px);
-    }
-    8%,
-    100% {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-  }
-}
-
-/* ==========================================================
    Шапка: прогресс чтения и текущий раздел
    ========================================================== */
 .header__progress {
@@ -2333,7 +2111,7 @@ img[data-zoom] {
   border: 1px solid rgba(255, 255, 255, 0.25);
   background: #1b232c;
   color: #fff;
-  font-size: 22px;
+  font-size: var(--fs-m);
   line-height: 1;
   cursor: pointer;
 }
@@ -2498,9 +2276,270 @@ img[data-zoom] {
 }
 
 .evo__text {
-  margin-top: 10px;
+  margin-top: 12px;
   min-height: 3.2em;
   color: var(--graphite);
-  font-size: var(--step--1);
+  font-size: var(--fs-m);
   line-height: 1.6;
+}
+
+/* ---------- Таблица идей и таблица «обычный продукт / с ИИ» ---------- */
+.bridge__task {
+  font-weight: 600;
+}
+
+.bridge__basis {
+  color: var(--graphite);
+}
+
+@media (min-width: 900px) {
+  .bridge td,
+  .bridge th[scope='row'] {
+    width: 30%;
+  }
+
+  .bridge .bridge__pilot {
+    width: 38%;
+  }
+}
+
+.tracks th[scope='row'] {
+  padding: 14px 16px 14px 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  text-align: left;
+  font-weight: 600;
+  color: var(--ink);
+  font-size: var(--fs-m);
+  line-height: 1.4;
+  width: 14%;
+}
+
+.tracks td {
+  width: 43%;
+  color: var(--graphite);
+}
+
+.tracks .tracks__ai {
+  color: var(--ink);
+}
+
+.tracks thead th:last-child {
+  color: var(--amber);
+}
+
+@media (max-width: 899px) {
+  .tracks th[scope='row'] {
+    display: block;
+    width: auto;
+    border: 0;
+    padding: 0 0 4px;
+  }
+}
+
+/* ==========================================================
+   Конвейер: шаги как станции на одной линии. Номер в кружке,
+   под ним название и пояснение. Шаг с моделью — янтарный.
+   «Пакет данных» пробегает отрезки по очереди, станции вспыхивают.
+   ========================================================== */
+.chain {
+  margin-top: 28px;
+}
+
+.chain ol {
+  --gap: 16px;
+  --node: 30px;
+  --step-t: 0.55s;
+  --cycle: calc(var(--n, 5) * var(--step-t) + 1.8s);
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--n, 5), minmax(0, 1fr));
+  gap: var(--gap);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Сама линия: от центра первой станции до центра последней */
+.chain ol::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--node) / 2 - 1px);
+  left: calc(var(--node) / 2);
+  right: calc((100% - (var(--n, 5) - 1) * var(--gap)) / var(--n, 5) - var(--node) / 2);
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--rule-strong), var(--rule));
+}
+
+.chain li {
+  position: relative;
+  hyphens: auto;
+  overflow-wrap: break-word;
+  padding-top: calc(var(--node) + 12px);
+  font-size: var(--fs-s);
+  line-height: 1.45;
+  min-width: 0;
+}
+
+.chain__node {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--node);
+  height: var(--node);
+  border-radius: 50%;
+  border: 1.5px solid var(--rule-strong);
+  background: var(--surface);
+  color: var(--graphite);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.chain li strong {
+  display: block;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.chain li span:last-child {
+  display: block;
+  color: var(--graphite);
+}
+
+.chain li.is-model .chain__node {
+  border-color: var(--amber);
+  color: var(--amber);
+  box-shadow: 0 0 0 4px var(--amber-tint);
+}
+
+.chain li.is-model strong {
+  color: var(--amber);
+}
+
+/* Отрезок от предыдущей станции к этой — по нему бежит светящийся пакет */
+.chain li + li::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--node) / 2 - 1px);
+  left: calc(-100% - var(--gap) + var(--node));
+  width: calc(100% + var(--gap) - var(--node));
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent 0 38%, var(--petrol) 50%, transparent 62% 100%);
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .chain.is-live li + li::before {
+    animation: chain-flow var(--cycle) linear infinite both;
+    animation-delay: calc((var(--i) - 0.6) * var(--step-t));
+  }
+
+  .chain.is-live .chain__node {
+    animation: chain-node var(--cycle) ease-out infinite both;
+    animation-delay: calc(var(--i) * var(--step-t));
+  }
+
+  .chain.is-live li.is-model .chain__node {
+    animation-name: chain-node-model;
+  }
+}
+
+@keyframes chain-flow {
+  0% {
+    opacity: 1;
+    background-position: 100% 0;
+  }
+  9% {
+    opacity: 1;
+    background-position: 0 0;
+  }
+  10%,
+  100% {
+    opacity: 0;
+    background-position: 0 0;
+  }
+}
+
+@keyframes chain-node {
+  0%,
+  100% {
+    transform: none;
+  }
+  3% {
+    transform: scale(1.12);
+    border-color: var(--petrol);
+    color: var(--petrol);
+    box-shadow: 0 0 0 6px var(--petrol-tint);
+  }
+  14% {
+    transform: none;
+  }
+}
+
+@keyframes chain-node-model {
+  0%,
+  100% {
+    box-shadow: 0 0 0 4px var(--amber-tint);
+  }
+  4%,
+  16% {
+    transform: scale(1.12);
+    box-shadow: 0 0 0 8px var(--amber-tint), 0 0 22px var(--amber);
+  }
+  28% {
+    transform: none;
+    box-shadow: 0 0 0 4px var(--amber-tint);
+  }
+}
+
+/* В узкой карточке конвейер идёт сверху вниз */
+@container (max-width: 640px) {
+  .chain ol {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .chain ol::before {
+    top: calc(var(--node) / 2);
+    bottom: calc(var(--node) / 2);
+    left: calc(var(--node) / 2 - 1px);
+    right: auto;
+    width: 2px;
+    height: auto;
+    background: linear-gradient(180deg, var(--rule-strong), var(--rule));
+  }
+
+  .chain li {
+    padding: 4px 0 0 calc(var(--node) + 14px);
+    min-height: var(--node);
+  }
+
+  .chain li + li::before {
+    display: none;
+  }
+}
+
+.chain__legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: var(--fs-s);
+  color: var(--graphite);
+}
+
+.chain__legend i {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid var(--amber);
+  box-shadow: 0 0 0 3px var(--amber-tint);
 }
