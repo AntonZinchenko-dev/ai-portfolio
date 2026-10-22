@@ -67,7 +67,7 @@ const CHAINS: Record<string, Array<{ title: string; text: string; model?: boolea
 };
 
 const SHOTS: Record<string, Array<{ name: string; caption: string }>> = {
-  pipepass: [{ name: 'pipepass-passport', caption: 'Паспорт трубы: износ по сечениям' }],
+  drilltrace: [{ name: 'drilltrace-passport', caption: 'Паспорт трубы: сечения в 3D, отклонение от среднего и топ нагруженных' }],
   agentyard: [
     { name: 'agentyard-dark', caption: 'Панель застрявшей задачи: ошибка с файлом и строкой, что пробовали, поле для подсказки' },
     { name: 'agentyard-plan', caption: 'План: как понята цель, этапы, задачи и пакеты для установки' },
@@ -258,7 +258,7 @@ export function App({ hasResume, repoUrl }: AppProps) {
           <div className="wrap hero__grid">
             <div>
               <p className="hero__who">
-                <Picture name="portrait" className="hero__avatar" sizes="56px" eager />
+                <Picture name="portrait" className="hero__avatar" sizes="(max-width: 639px) 84px, 56px" eager />
                 <span>
                   <strong>{person.name}</strong>, {person.role}, {person.city}
                 </span>
@@ -304,9 +304,9 @@ export function App({ hasResume, repoUrl }: AppProps) {
           title="Проекты"
           intro="Решения на данных заказчика, LLM-системы и продукт, доведённый до конца. Над каждым проектом подписано, чей он: заказчика, мой или тестовое задание."
         >
-          <article className="case case--flagship" id={flagship.anchor} aria-labelledby="pipepass-title">
+          <article className="case case--flagship" id={flagship.anchor} aria-labelledby="drilltrace-title">
             <span className={`badge badge--${flagship.badge}`}>{flagship.badgeText}</span>
-            <h3 className="case__title" id="pipepass-title">
+            <h3 className="case__title" id="drilltrace-title">
               {flagship.title}
             </h3>
             <p className="case__summary">{flagship.summary}</p>
@@ -315,16 +315,16 @@ export function App({ hasResume, repoUrl }: AppProps) {
                 name="video-showcase"
                 component={VideoShowcase}
                 props={{
-                  name: 'pipepass',
-                  title: 'PipePass, вьюер рейса RUN-012',
-                  label: 'Демо-контур',
+                  name: 'drilltrace',
+                  title: 'DrillTrace: дашборд, скважины, паспорт трубы и рейс',
+                  label: 'Демо-данные',
                   width: 1600,
-                  height: 786,
+                  height: 788,
                 }}
               />
               <p className="showcase__caption">
-                Запись настоящего интерфейса на демо-контуре: данные сгенерированы, контракт — как у боевого API
-                заказчика.
+                Запись демо-версии: парк труб, скважины трёх форм, паспорт трубы по сечениям и проигрывание рейса.
+                Данные синтетические.
               </p>
             </div>
             <div className="case__cols case__cols--split">
@@ -350,7 +350,7 @@ export function App({ hasResume, repoUrl }: AppProps) {
                 {flagship.facts && <Facts facts={flagship.facts} />}
               </div>
             </div>
-            <Shots id="pipepass" />
+            <Shots id="drilltrace" />
             <CaseFoot c={flagship} />
           </article>
 

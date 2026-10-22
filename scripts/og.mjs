@@ -33,7 +33,7 @@ const html = `<!doctype html><html lang="ru"><head><meta charset="utf-8"><style>
 <div class="wrap">
   <p class="who"><b>Антон Зинченко</b>, AI-инженер, Екатеринбург</p>
   <h1>LLM в рабочих процессах: без выдумок, с проверкой</h1>
-  <div class="facts"><div><b>6+ лет</b>системы для заводов и складов</div><div><b>PipePass</b>данные бурения</div><div><b>Агенты и RAG</b>последний год</div></div>
+  <div class="facts"><div><b>6+ лет</b>системы для заводов и складов</div><div><b>DrillTrace</b>данные бурения</div><div><b>Агенты и RAG</b>последний год</div></div>
 </div></body></html>`;
 
 const browser = await chromium.launch();

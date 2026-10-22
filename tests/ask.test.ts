@@ -37,9 +37,9 @@ test('поиск: вопрос про SQL находит честный отве
   assert.ok(hits.some((h) => h.fragment.id === 'fit-sql'));
 });
 
-test('поиск: вопрос о бурении находит PipePass', () => {
+test('поиск: вопрос о бурении находит DrillTrace', () => {
   const hits = new FragmentIndex(corpus).search('Делали что-то для бурения?');
-  assert.ok(hits[0]?.fragment.anchor === 'pipepass');
+  assert.ok(hits[0]?.fragment.anchor === 'drilltrace');
 });
 
 test('каждый готовый вопрос находит хотя бы один фрагмент', () => {

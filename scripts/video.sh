@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # Пережимает видео проекта для сайта: обрезает чёрные поля и полосу записи экрана,
 # убирает звук, делает H.264 (везде) и VP9 (легче) в двух ширинах плюс кадр-заставку.
-# Нужен ffmpeg. Запуск: bash scripts/video.sh media/source/pipepass.mp4 pipepass
+# Нужен ffmpeg. Запуск: bash scripts/video.sh media/source/drilltrace.mp4 drilltrace
 set -euo pipefail
-SRC="${1:-media/source/pipepass.mp4}"
-NAME="${2:-pipepass}"
-CROP="${CROP:-crop=1920:944:0:70}"   # для этой записи: поля 70 px сверху и ~66 px снизу
-POSTER_AT="${POSTER_AT:-13.5}"
+SRC="${1:-media/source/drilltrace.mp4}"
+NAME="${2:-drilltrace}"
+CROP="${CROP:-crop=1894:932:24:76}"   # для этой записи: поля 76 px сверху, ~72 снизу и по 24 по бокам
+POSTER_AT="${POSTER_AT:-10}"
 OUT=public/media
 mkdir -p "$OUT"
 

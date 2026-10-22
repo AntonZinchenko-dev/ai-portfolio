@@ -1,0 +1,13 @@
+{
+  "alt": "Паспорт бурильной трубы в DrillTrace: труба в 3D, разобранная на сечения",
+  "variants": [
+    {
+      "media": null,
+      "avif": "./img/drilltrace-passport-desktop-640.avif 640w, ./img/drilltrace-passport-desktop-960.avif 960w, ./img/drilltrace-passport-desktop-1440.avif 1440w, ./img/drilltrace-passport-desktop-1920.avif 1920w",
+      "webp": "./img/drilltrace-passport-desktop-640.webp 640w, ./img/drilltrace-passport-desktop-960.webp 960w, ./img/drilltrace-passport-desktop-1440.webp 1440w, ./img/drilltrace-passport-desktop-1920.webp 1920w",
+      "src": "./img/drilltrace-passport-desktop-1920.webp",
+      "width": 1920,
+      "height": 1080
+    }
+  ]
+}

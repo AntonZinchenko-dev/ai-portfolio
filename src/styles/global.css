@@ -454,6 +454,17 @@ button {
   box-shadow: 0 0 0 2px var(--paper), 0 0 0 3px var(--rule-strong);
 }
 
+/* На телефоне портрет крупнее: это первое, что видно на экране */
+@media (max-width: 639px) {
+  .hero__who {
+    gap: 16px;
+  }
+  .hero__avatar img {
+    width: 84px;
+    height: 84px;
+  }
+}
+
 .hero__who strong {
   color: var(--ink);
   font-weight: 600;

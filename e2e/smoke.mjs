@@ -82,7 +82,7 @@ for (const vp of [
 
   await page.locator('.showcase').scrollIntoViewIfNeeded();
   await page.waitForTimeout(500);
-  check((await page.locator('.showcase video source').count()) >= 2, 'видео PipePass на месте');
+  check((await page.locator('.showcase video source').count()) >= 2, 'видео DrillTrace на месте');
 
   await page.screenshot({ path: path.join(shots, `${vp.width}.png`), fullPage: false });
   check(errors.length === 0, `без ошибок в консоли${errors.length ? `: ${errors.join(' | ')}` : ''}`);

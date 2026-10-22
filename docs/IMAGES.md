@@ -37,7 +37,7 @@
 
 | Слот | Что снять |
 | --- | --- |
-| `pipepass-passport` | Паспорт трубы: труба в 3D, окрашенная по сечениям, тёмная тема |
+| `drilltrace-passport` | Паспорт трубы DrillTrace: труба в 3D по сечениям, тёмная тема |
 | `freight-overview`, `freight-quotes`, `freight-clarify` | Freight Intake: уже нарезаны из скриншота экрана разбора |
 | `agentyard-dark`, `agentyard-plan`, `agentyard-progress` | AgentYard: уже взяты из `docs/screenshots` его репозитория |
 | `pipewiki-answer` | pipewiki: ответ со ссылками на источники |
