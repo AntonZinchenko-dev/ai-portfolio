@@ -446,12 +446,21 @@ button {
   margin-bottom: 22px;
 }
 
+/* Портрет — скруглённый квадрат без обводки: круг в двойном кольце
+   на тёмном фоне выглядел как медальон. flex-shrink: 0 — иначе длинная
+   подпись рядом сжимает картинку по ширине и круг превращается в овал. */
+.hero__avatar {
+  flex-shrink: 0;
+  line-height: 0;
+}
+
 .hero__avatar img {
+  display: block;
   width: 56px;
   height: 56px;
-  border-radius: 50%;
+  border-radius: 14px;
   object-fit: cover;
-  box-shadow: 0 0 0 2px var(--paper), 0 0 0 3px var(--rule-strong);
+  object-position: 50% 30%;
 }
 
 /* На телефоне портрет крупнее: это первое, что видно на экране */
@@ -462,6 +471,7 @@ button {
   .hero__avatar img {
     width: 84px;
     height: 84px;
+    border-radius: 18px;
   }
 }
 
