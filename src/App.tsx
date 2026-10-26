@@ -218,7 +218,7 @@ export function App({ hasResume, repoUrl }: AppProps) {
   const [agentyard, rag, freight] = aiCases as [CaseStudy, CaseStudy, CaseStudy];
   const opsPhotos = [
     { name: 'ops-warehouse', caption: 'Склад' },
-    { name: 'ops-kitchen', caption: 'Фабрика-кухня' },
+    { name: 'ops-factory', caption: 'Производство' },
     { name: 'ops-drilling', caption: 'Буровая' },
   ].filter((p) => hasImage(p.name));
 
@@ -396,8 +396,8 @@ export function App({ hasResume, repoUrl }: AppProps) {
 
         <Section
           id="processes"
-          title="Что я бы проверил у вас"
-          intro="Идеи для сети кухонь и магазинов — со стороны, до разговора с командой. У каждой подписано, на какой мой опыт она опирается."
+          title="От интерфейсов к готовым продуктам"
+          intro="Шесть лет я делал фронтенд для систем складов, производства, логистики и бурения: экраны, на которых люди работают каждый день. Теперь собираю продукт целиком — разбираю процесс, проектирую, делаю MVP и довожу до запуска. Вот задачи, которые встречаются почти в любой компании, и как я к ним подхожу."
         >
           {opsPhotos.length > 0 && (
             <div className="ops-photos">
@@ -412,21 +412,21 @@ export function App({ hasResume, repoUrl }: AppProps) {
           <table className="bridge">
             <thead>
               <tr>
-                <th scope="col">Задача у вас</th>
-                <th scope="col">Что можно собрать как MVP</th>
-                <th scope="col">На что опираюсь</th>
+                <th scope="col">Типовая задача</th>
+                <th scope="col">Что соберу как MVP</th>
+                <th scope="col">Как подхожу</th>
               </tr>
             </thead>
             <tbody>
               {processes.map((p) => (
                 <tr key={p.id}>
-                  <td data-label="Задача у вас" className="bridge__task">
+                  <td data-label="Типовая задача" className="bridge__task">
                     {p.task}
                   </td>
-                  <td data-label="Что можно собрать как MVP" className="bridge__pilot">
+                  <td data-label="Что соберу как MVP" className="bridge__pilot">
                     {p.mvp}
                   </td>
-                  <td data-label="На что опираюсь" className="bridge__basis">
+                  <td data-label="Как подхожу" className="bridge__basis">
                     {p.basis}
                   </td>
                 </tr>
@@ -434,8 +434,8 @@ export function App({ hasResume, repoUrl }: AppProps) {
             </tbody>
           </table>
           <p className="bridge-note">
-            Это гипотезы. Какая из них нужна на самом деле, решается после разговора с теми, кто делает эту работу
-            каждый день.
+            Какая задача важнее у вас, решаем после разговора с теми, кто делает эту работу каждый день: с них
+            начинается любой продукт.
           </p>
         </Section>
 

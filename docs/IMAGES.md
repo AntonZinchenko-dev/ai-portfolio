@@ -25,7 +25,10 @@
 **ops-warehouse — склад**
 > Documentary photo inside a Russian distribution warehouse, tall metal pallet racks with cardboard boxes, a worker in a dark work jacket scanning a box with a handheld barcode scanner, seen from behind at mid distance, cold daylight from skylights mixed with warm lamp, muted blue-grey and concrete palette, one warm amber accent, shallow depth of field, no logos, no readable text, 35mm, realistic
 
-**ops-kitchen — фабрика-кухня**
+**ops-factory — производство** (заменяет ops-kitchen: блок теперь общий, не под одну компанию)
+> Documentary photo inside a Russian machine-building workshop, a CNC machine with a lit control panel, an operator in a dark work jacket checking a part, seen from the side at mid distance, face not in focus, cold daylight from high windows mixed with warm machine light, muted blue-grey and concrete palette, one warm amber accent, shallow depth of field, no logos, no readable text, 35mm, realistic
+
+**ops-kitchen — фабрика-кухня** (больше не используется)
 > Documentary photo of an industrial food production kitchen in Russia, stainless steel worktables, cooks in white uniforms and caps portioning ready meals into containers on a line, seen from the side at mid distance, faces not in focus, bright even daylight, muted cool palette with warm food colors as the only accent, clean and orderly, no logos, no readable text, 35mm, realistic
 
 **ops-drilling — буровая**

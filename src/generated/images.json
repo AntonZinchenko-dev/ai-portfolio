@@ -204,5 +204,26 @@
         "height": 1080
       }
     ]
+  },
+  "ops-factory": {
+    "alt": "Производственный цех: оператор у станка с ЧПУ проверяет деталь",
+    "variants": [
+      {
+        "media": "(max-width: 767px)",
+        "avif": "./img/ops-factory-mobile-480.avif 480w, ./img/ops-factory-mobile-768.avif 768w, ./img/ops-factory-mobile-1080.avif 1080w",
+        "webp": "./img/ops-factory-mobile-480.webp 480w, ./img/ops-factory-mobile-768.webp 768w, ./img/ops-factory-mobile-1080.webp 1080w",
+        "src": "./img/ops-factory-mobile-1080.webp",
+        "width": 1080,
+        "height": 675
+      },
+      {
+        "media": null,
+        "avif": "./img/ops-factory-desktop-640.avif 640w, ./img/ops-factory-desktop-960.avif 960w",
+        "webp": "./img/ops-factory-desktop-640.webp 640w, ./img/ops-factory-desktop-960.webp 960w",
+        "src": "./img/ops-factory-desktop-960.webp",
+        "width": 960,
+        "height": 720
+      }
+    ]
   }
 }

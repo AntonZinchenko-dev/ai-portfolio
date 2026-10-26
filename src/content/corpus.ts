@@ -50,7 +50,7 @@ export function buildCorpus(): Fragment[] {
   for (const w of commercial) add(`work-${w.id}`, 'work', `${w.title}, ${w.company}`, `${w.task} ${w.result}`);
   for (const f of fit) add(`fit-${f.id}`, 'fit', f.requirement, f.evidence);
   for (const p of processes) {
-    add(`process-${p.id}`, 'processes', p.task, `${p.task}. Что можно собрать как MVP: ${p.mvp} На что опираюсь: ${p.basis}`);
+    add(`process-${p.id}`, 'processes', p.task, `${p.task}. Что соберу как MVP: ${p.mvp} Как подхожу: ${p.basis}`);
   }
   approach.forEach((s, i) =>
     add(`approach-${i}`, 'approach', s.title, `Обычный продукт: ${s.product} Продукт с ИИ: ${s.ai}`),
