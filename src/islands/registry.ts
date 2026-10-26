@@ -7,4 +7,5 @@ export const islands: Record<string, () => Promise<{ default: ComponentType<Reco
   'video-showcase': () => import('./VideoShowcase') as never,
   'fit-matrix': () => import('./FitMatrix') as never,
   'ask-widget': () => import('./AskWidget') as never,
+  'hr-event': () => import('./HrEvent') as never,
 };

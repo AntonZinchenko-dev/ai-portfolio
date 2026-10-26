@@ -2567,3 +2567,158 @@ img[data-zoom] {
   border: 1.5px solid var(--amber);
   box-shadow: 0 0 0 3px var(--amber-tint);
 }
+
+/* ---------- Пасхалка: эйчар и сиба внизу экрана ---------- */
+.hr-event {
+  position: fixed;
+  inset: auto 0 0 0;
+  height: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.hr-event__close {
+  position: fixed;
+  right: 12px;
+  bottom: 150px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--rule-strong);
+  background: var(--surface);
+  color: var(--graphite);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.hr-event__hr,
+.hr-event__dog {
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  transition-property: transform;
+  transition-timing-function: linear;
+  will-change: transform;
+}
+
+.hr-event__dog {
+  transition-timing-function: cubic-bezier(0.3, 0.6, 0.4, 1);
+}
+
+.hr-event__bubble {
+  position: absolute;
+  bottom: 146px;
+  left: 30px;
+  width: max-content;
+  max-width: 260px;
+  padding: 10px 14px;
+  border-radius: 14px 14px 14px 4px;
+  background: #fff;
+  color: #1c2230;
+  font-size: 14px;
+  line-height: 1.35;
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.25);
+  animation: hr-pop 0.25s ease-out;
+}
+
+.hr-event__bubble.is-left {
+  left: auto;
+  right: 30px;
+  border-radius: 14px 14px 4px 14px;
+}
+
+.hr-event__boom {
+  position: absolute;
+  bottom: 150px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-8deg);
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: #ffd84d;
+  color: #2b1d14;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  box-shadow: 0 4px 0 #c28f00;
+  animation: hr-pop 0.18s ease-out;
+}
+
+/* шаг: ноги качаются, тело чуть подпрыгивает */
+.hr-leg,
+.dog-leg {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+}
+
+.hr-event__hr.is-walking svg {
+  animation: hr-bob 0.42s ease-in-out infinite;
+}
+
+.hr-event__hr.is-walking .hr-leg--a,
+.hr-event__dog.is-running .dog-leg--a {
+  animation: hr-step 0.42s ease-in-out infinite;
+}
+
+.hr-event__hr.is-walking .hr-leg--b,
+.hr-event__dog.is-running .dog-leg--b {
+  animation: hr-step 0.42s ease-in-out infinite reverse;
+}
+
+.hr-event__dog.is-running .dog-leg--a,
+.hr-event__dog.is-running .dog-leg--b {
+  animation-duration: 0.22s;
+}
+
+.hr-event__dog svg {
+  overflow: visible;
+}
+
+/* бита вращается вокруг пасти */
+.dog-bat {
+  transform-box: view-box;
+  transform-origin: 82px 40px;
+  transform: rotate(-95deg);
+  transition: transform 0.12s cubic-bezier(0.5, 0, 0.9, 0.4);
+}
+
+.hr-event__dog.is-swinging .dog-bat {
+  transform: rotate(6deg);
+}
+
+/* после боньк — сплющилась */
+.hr-event__hr.is-bonked svg {
+  transform-origin: 50% 100%;
+  animation: hr-squash 0.4s ease-out;
+}
+
+@keyframes hr-step {
+  from { transform: rotate(16deg); }
+  to { transform: rotate(-16deg); }
+}
+
+@keyframes hr-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes hr-squash {
+  0% { transform: scale(1, 1); }
+  30% { transform: scale(1.12, 0.78); }
+  70% { transform: scale(0.96, 1.05); }
+  100% { transform: scale(1, 1); }
+}
+
+@keyframes hr-pop {
+  from { opacity: 0; scale: 0.8; }
+  to { opacity: 1; scale: 1; }
+}
+
+@media (max-width: 639px) {
+  .hr-event__bubble {
+    max-width: 200px;
+    font-size: 13px;
+  }
+}

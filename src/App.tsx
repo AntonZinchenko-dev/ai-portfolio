@@ -25,6 +25,7 @@ import Evolution from './islands/Evolution';
 import VideoShowcase from './islands/VideoShowcase';
 import FitMatrix from './islands/FitMatrix';
 import AskWidget from './islands/AskWidget';
+import HrEvent from './islands/HrEvent';
 
 export interface AppProps {
   hasResume: boolean;
@@ -590,6 +591,9 @@ export function App({ hasResume, repoUrl }: AppProps) {
           </div>
         </section>
       </main>
+
+      {/* пасхалка: запускается, когда читатель докрутил до низа */}
+      <Island name="hr-event" component={HrEvent} props={{}} />
 
       <footer className="footer">
         <div className="wrap footer__inner">
