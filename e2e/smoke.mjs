@@ -3,8 +3,8 @@
  * Запускается после npm run build: npm run e2e
  *
  * Проверяет на телефоне и на компьютере: страница открывается без ошибок в консоли,
- * острова оживают, «Спросите резюме» отвечает потоком и ведёт к источнику,
- * нет горизонтальной прокрутки, у картинок есть alt, якоря навигации существуют.
+ * острова оживают, видео на месте, нет горизонтальной прокрутки, у картинок есть alt,
+ * якоря навигации существуют.
  */
 import { chromium } from 'playwright';
 import path from 'node:path';
@@ -66,19 +66,6 @@ for (const vp of [
 
   const mode = await page.locator('.evo').getAttribute('data-mode');
   check(mode === 'poly' || mode === 'tags', `вариант анимации выбран (${mode})`);
-
-  await page.locator('#freight').scrollIntoViewIfNeeded();
-  await page.waitForSelector('.intake[data-hydrated]', { timeout: 8000 });
-  check(true, 'демо разбора заявки ожило в кейсе Freight Intake');
-
-  await page.locator('#ask').scrollIntoViewIfNeeded();
-  await page.getByRole('button', { name: 'Что у вас с Python и SQL?' }).click();
-  await page.waitForSelector('.ask__source', { timeout: 10000 });
-  const answer = await page.locator('.ask__answer').innerText();
-  check(answer.length > 40, 'виджет «Спросите резюме» ответил');
-  await page.locator('.ask__source').first().click();
-  await page.waitForTimeout(400);
-  check((await page.evaluate(() => location.hash)).length > 1, 'клик по источнику ведёт к блоку страницы');
 
   await page.locator('.showcase').scrollIntoViewIfNeeded();
   await page.waitForTimeout(500);

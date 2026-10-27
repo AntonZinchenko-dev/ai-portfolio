@@ -15,7 +15,11 @@ import { hrPhrases } from '../content/hr-phrases';
 type Phase = 'walk' | 'talk' | 'bonk';
 
 const HR_W = 84;
-const DOG_W = 96;
+/** Холст сибы шире самой собаки: в нём умещается бита в любом положении.
+ * На iPhone Safari не рисует то, что вылезает за viewBox, поэтому место заложено заранее. */
+const DOG_W = 160;
+/** Сколько секунд читатель должен пробыть внизу страницы, чтобы появилась пасхалка. */
+const WAIT_AT_BOTTOM = 30;
 const SPEED = 110; // px/s
 const TALK_MS = 2800;
 
@@ -52,8 +56,21 @@ export default function HrEvent() {
     a.preload = 'auto';
     a.volume = 0.7;
     sound.current = a;
-    setOn(true);
-    return () => timers.current.forEach((t) => clearTimeout(t));
+    // ждём, пока читатель пробудет внизу страницы 30 секунд подряд; ушёл выше — счёт сначала
+    let seconds = 0;
+    const tick = window.setInterval(() => {
+      const atBottom =
+        window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 240;
+      seconds = atBottom ? seconds + 1 : 0;
+      if (seconds >= WAIT_AT_BOTTOM) {
+        clearInterval(tick);
+        setOn(true);
+      }
+    }, 1000);
+    return () => {
+      clearInterval(tick);
+      timers.current.forEach((t) => clearTimeout(t));
+    };
   }, []);
 
   /* сцена: каждая фаза сама планирует следующую */
@@ -87,7 +104,7 @@ export default function HrEvent() {
       // встаёт сзади на расстоянии биты и подпрыгивает для удара
       const dir = (hr.dir === 1 ? 1 : -1) as 1 | -1;
       const from = dir === 1 ? -DOG_W - 60 : vw + 60;
-      const stop = dir === 1 ? hr.x - 96 : hr.x + 84;
+      const stop = dir === 1 ? hr.x - 104 : hr.x + 28;
       const run = (Math.abs(stop - from) / 520) * 1000;
       setDog({ x: from, y: 0, dir, ms: 0, jump: false, swing: false, show: true });
       later(30, () => setDog((d) => ({ ...d, x: stop, ms: run })));
@@ -213,7 +230,7 @@ function HrSvg() {
 /** Мемная сиба: рыжая, с подкрученным хвостом и взглядом искоса. Смотрит вправо. */
 function ShibaSvg() {
   return (
-    <svg width={DOG_W} height="76" viewBox="0 0 96 76" role="img" aria-label="Сиба-ину с битой" overflow="visible">
+    <svg width={DOG_W} height="140" viewBox="-8 -64 160 140" role="img" aria-label="Сиба-ину с битой">
       {/* хвост бубликом */}
       <path d="M14 34 Q2 26 8 16 Q16 8 22 18 Q24 26 16 28" fill="none" stroke="#d9823b" strokeWidth="7" strokeLinecap="round" />
       <path d="M14 22 Q16 20 18 22" fill="none" stroke="#fbe9d0" strokeWidth="2.4" strokeLinecap="round" />

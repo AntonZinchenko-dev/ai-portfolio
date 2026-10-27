@@ -38,45 +38,6 @@
       }
     ]
   },
-  "freight-clarify": {
-    "alt": "Freight Intake: уточняющие вопросы — две станции «Новокузнецк» из справочника и вопрос про единицу ставки",
-    "variants": [
-      {
-        "media": null,
-        "avif": "./img/freight-clarify-desktop-640.avif 640w, ./img/freight-clarify-desktop-960.avif 960w",
-        "webp": "./img/freight-clarify-desktop-640.webp 640w, ./img/freight-clarify-desktop-960.webp 960w",
-        "src": "./img/freight-clarify-desktop-960.webp",
-        "width": 960,
-        "height": 720
-      }
-    ]
-  },
-  "freight-overview": {
-    "alt": "Freight Intake: примеры заявок, шаги разбора, документ с подсвеченными цитатами, уточнения и черновик сделки",
-    "variants": [
-      {
-        "media": null,
-        "avif": "./img/freight-overview-desktop-640.avif 640w, ./img/freight-overview-desktop-960.avif 960w, ./img/freight-overview-desktop-1440.avif 1440w",
-        "webp": "./img/freight-overview-desktop-640.webp 640w, ./img/freight-overview-desktop-960.webp 960w, ./img/freight-overview-desktop-1440.webp 1440w",
-        "src": "./img/freight-overview-desktop-1440.webp",
-        "width": 1440,
-        "height": 900
-      }
-    ]
-  },
-  "freight-quotes": {
-    "alt": "Freight Intake: шаги разбора, поток модели в JSON по схеме и документ, где каждое значение подсвечено цитатой",
-    "variants": [
-      {
-        "media": null,
-        "avif": "./img/freight-quotes-desktop-640.avif 640w, ./img/freight-quotes-desktop-960.avif 960w",
-        "webp": "./img/freight-quotes-desktop-640.webp 640w, ./img/freight-quotes-desktop-960.webp 960w",
-        "src": "./img/freight-quotes-desktop-960.webp",
-        "width": 960,
-        "height": 720
-      }
-    ]
-  },
   "kobo-builder": {
     "alt": "KŌBŌ Keys: конструктор клавиатуры — живое превью раскладки 65%, выбор корпуса, кейкапов и свитчей, цена сборки",
     "variants": [
@@ -116,69 +77,6 @@
       }
     ]
   },
-  "ops-drilling": {
-    "alt": "Буровая установка в заснеженной тайге, на переднем плане бурильные трубы",
-    "variants": [
-      {
-        "media": "(max-width: 767px)",
-        "avif": "./img/ops-drilling-mobile-480.avif 480w, ./img/ops-drilling-mobile-768.avif 768w, ./img/ops-drilling-mobile-1080.avif 1080w",
-        "webp": "./img/ops-drilling-mobile-480.webp 480w, ./img/ops-drilling-mobile-768.webp 768w, ./img/ops-drilling-mobile-1080.webp 1080w",
-        "src": "./img/ops-drilling-mobile-1080.webp",
-        "width": 1080,
-        "height": 675
-      },
-      {
-        "media": null,
-        "avif": "./img/ops-drilling-desktop-640.avif 640w, ./img/ops-drilling-desktop-960.avif 960w",
-        "webp": "./img/ops-drilling-desktop-640.webp 640w, ./img/ops-drilling-desktop-960.webp 960w",
-        "src": "./img/ops-drilling-desktop-960.webp",
-        "width": 960,
-        "height": 720
-      }
-    ]
-  },
-  "ops-kitchen": {
-    "alt": "Цех фабрики-кухни: сотрудники раскладывают готовые блюда в контейнеры",
-    "variants": [
-      {
-        "media": "(max-width: 767px)",
-        "avif": "./img/ops-kitchen-mobile-480.avif 480w, ./img/ops-kitchen-mobile-768.avif 768w, ./img/ops-kitchen-mobile-1080.avif 1080w",
-        "webp": "./img/ops-kitchen-mobile-480.webp 480w, ./img/ops-kitchen-mobile-768.webp 768w, ./img/ops-kitchen-mobile-1080.webp 1080w",
-        "src": "./img/ops-kitchen-mobile-1080.webp",
-        "width": 1080,
-        "height": 675
-      },
-      {
-        "media": null,
-        "avif": "./img/ops-kitchen-desktop-640.avif 640w, ./img/ops-kitchen-desktop-960.avif 960w",
-        "webp": "./img/ops-kitchen-desktop-640.webp 640w, ./img/ops-kitchen-desktop-960.webp 960w",
-        "src": "./img/ops-kitchen-desktop-960.webp",
-        "width": 960,
-        "height": 720
-      }
-    ]
-  },
-  "ops-warehouse": {
-    "alt": "Кладовщик сканирует коробку на стеллаже склада",
-    "variants": [
-      {
-        "media": "(max-width: 767px)",
-        "avif": "./img/ops-warehouse-mobile-480.avif 480w, ./img/ops-warehouse-mobile-768.avif 768w, ./img/ops-warehouse-mobile-1080.avif 1080w",
-        "webp": "./img/ops-warehouse-mobile-480.webp 480w, ./img/ops-warehouse-mobile-768.webp 768w, ./img/ops-warehouse-mobile-1080.webp 1080w",
-        "src": "./img/ops-warehouse-mobile-1080.webp",
-        "width": 1080,
-        "height": 675
-      },
-      {
-        "media": null,
-        "avif": "./img/ops-warehouse-desktop-640.avif 640w, ./img/ops-warehouse-desktop-960.avif 960w",
-        "webp": "./img/ops-warehouse-desktop-640.webp 640w, ./img/ops-warehouse-desktop-960.webp 960w",
-        "src": "./img/ops-warehouse-desktop-960.webp",
-        "width": 960,
-        "height": 720
-      }
-    ]
-  },
   "portrait": {
     "alt": "Антон Зинченко",
     "variants": [
@@ -205,24 +103,68 @@
       }
     ]
   },
-  "ops-factory": {
-    "alt": "Производственный цех: оператор у станка с ЧПУ проверяет деталь",
+  "archforge-schema": {
+    "alt": "ArchForge: схема архитектуры по требованиям, справа — карточка звена «Сервис на Go» с объяснением выбора",
     "variants": [
       {
-        "media": "(max-width: 767px)",
-        "avif": "./img/ops-factory-mobile-480.avif 480w, ./img/ops-factory-mobile-768.avif 768w, ./img/ops-factory-mobile-1080.avif 1080w",
-        "webp": "./img/ops-factory-mobile-480.webp 480w, ./img/ops-factory-mobile-768.webp 768w, ./img/ops-factory-mobile-1080.webp 1080w",
-        "src": "./img/ops-factory-mobile-1080.webp",
-        "width": 1080,
-        "height": 675
-      },
+        "media": null,
+        "avif": "./img/archforge-schema-desktop-640.avif 640w, ./img/archforge-schema-desktop-960.avif 960w, ./img/archforge-schema-desktop-1440.avif 1440w",
+        "webp": "./img/archforge-schema-desktop-640.webp 640w, ./img/archforge-schema-desktop-960.webp 960w, ./img/archforge-schema-desktop-1440.webp 1440w",
+        "src": "./img/archforge-schema-desktop-1440.webp",
+        "width": 1440,
+        "height": 1000
+      }
+    ]
+  },
+  "archforge-tco": {
+    "alt": "ArchForge: отчёт «Стоимость владения» — сравнение облачных провайдеров и своих серверов за 3 года",
+    "variants": [
       {
         "media": null,
-        "avif": "./img/ops-factory-desktop-640.avif 640w, ./img/ops-factory-desktop-960.avif 960w",
-        "webp": "./img/ops-factory-desktop-640.webp 640w, ./img/ops-factory-desktop-960.webp 960w",
-        "src": "./img/ops-factory-desktop-960.webp",
+        "avif": "./img/archforge-tco-desktop-640.avif 640w, ./img/archforge-tco-desktop-960.avif 960w, ./img/archforge-tco-desktop-1440.avif 1440w",
+        "webp": "./img/archforge-tco-desktop-640.webp 640w, ./img/archforge-tco-desktop-960.webp 960w, ./img/archforge-tco-desktop-1440.webp 1440w",
+        "src": "./img/archforge-tco-desktop-1440.webp",
+        "width": 1440,
+        "height": 1000
+      }
+    ]
+  },
+  "archforge-code": {
+    "alt": "ArchForge: генератор кода — дерево файлов по слоям и сгенерированный сервис на Go",
+    "variants": [
+      {
+        "media": null,
+        "avif": "./img/archforge-code-desktop-640.avif 640w, ./img/archforge-code-desktop-960.avif 960w",
+        "webp": "./img/archforge-code-desktop-640.webp 640w, ./img/archforge-code-desktop-960.webp 960w",
+        "src": "./img/archforge-code-desktop-960.webp",
         "width": 960,
-        "height": 720
+        "height": 600
+      }
+    ]
+  },
+  "shibatube-studio": {
+    "alt": "ShibaTube: студия — персонаж-кемономими в полный рост, справа вывод в OBS, пресеты и выбор камеры",
+    "variants": [
+      {
+        "media": null,
+        "avif": "./img/shibatube-studio-desktop-640.avif 640w, ./img/shibatube-studio-desktop-960.avif 960w, ./img/shibatube-studio-desktop-1440.avif 1440w",
+        "webp": "./img/shibatube-studio-desktop-640.webp 640w, ./img/shibatube-studio-desktop-960.webp 960w, ./img/shibatube-studio-desktop-1440.webp 1440w",
+        "src": "./img/shibatube-studio-desktop-1440.webp",
+        "width": 1440,
+        "height": 870
+      }
+    ]
+  },
+  "shibatube-wizard": {
+    "alt": "ShibaTube: мастер модели — список деталей из PSD, превью с направляющими у глаз, настройка детали «Глаза закрыты»",
+    "variants": [
+      {
+        "media": null,
+        "avif": "./img/shibatube-wizard-desktop-640.avif 640w, ./img/shibatube-wizard-desktop-960.avif 960w, ./img/shibatube-wizard-desktop-1440.avif 1440w",
+        "webp": "./img/shibatube-wizard-desktop-640.webp 640w, ./img/shibatube-wizard-desktop-960.webp 960w, ./img/shibatube-wizard-desktop-1440.webp 1440w",
+        "src": "./img/shibatube-wizard-desktop-1440.webp",
+        "width": 1440,
+        "height": 871
       }
     ]
   }

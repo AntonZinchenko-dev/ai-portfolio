@@ -1,17 +1,17 @@
 import type { ReactNode } from 'react';
 import {
-  aiCases,
+  agentyard,
   approach,
+  archforge,
   commercial,
   education,
   experience,
   flagship,
   hero,
-  heroDemo,
   levelText,
   person,
-  processes,
   productCase,
+  shibatube,
   stack,
   tools,
   type CaseStudy,
@@ -20,11 +20,8 @@ import { Island } from './components/Island';
 import { Picture, hasImage } from './components/Picture';
 import { Chain } from './components/Chain';
 import { FileIcon, GithubIcon, MailIcon, MoonIcon, SunIcon, TelegramIcon } from './components/Icons';
-import IntakeDemo from './islands/IntakeDemo';
 import Evolution from './islands/Evolution';
 import VideoShowcase from './islands/VideoShowcase';
-import FitMatrix from './islands/FitMatrix';
-import AskWidget from './islands/AskWidget';
 import HrEvent from './islands/HrEvent';
 
 export interface AppProps {
@@ -34,10 +31,9 @@ export interface AppProps {
 
 const NAV = [
   { href: '#cases', text: 'Проекты' },
-  { href: '#fit', text: 'Под вакансию' },
-  { href: '#processes', text: 'Процессы' },
+  { href: '#approach', text: 'Подход' },
   { href: '#work', text: 'Опыт' },
-  { href: '#ask', text: 'Спросить' },
+  { href: '#stack', text: 'Стек' },
   { href: '#contacts', text: 'Контакты' },
 ];
 
@@ -50,20 +46,13 @@ const CHAINS: Record<string, Array<{ title: string; text: string; model?: boolea
     { title: 'Разбор неудачи', text: 'следующий шаг или подсказка' },
     { title: 'Применить', text: 'одной кнопкой, с откатом' },
   ],
-  rag: [
-    { title: 'Документы', text: 'вики, регламенты' },
-    { title: 'Фрагменты', text: 'нарезка и индекс' },
-    { title: 'Поиск', text: 'самое подходящее' },
-    { title: 'Ответ', text: 'только по найденному', model: true },
-    { title: 'Источник', text: 'ссылка на пункт' },
-  ],
-  freight: [
-    { title: 'Чтение', text: 'txt, eml, docx, pdf, xlsx' },
-    { title: 'Извлечение', text: 'по JSON-схеме, t\u00a0=\u00a00', model: true },
-    { title: 'Проверка цитат', text: 'значение без цитаты отклоняется' },
-    { title: 'Справочники', text: 'станции, грузы, правила' },
-    { title: 'Вопросы', text: 'варианты из справочника' },
-    { title: 'Черновик сделки', text: 'подтверждает человек' },
+  shibatube: [
+    { title: 'Камера', text: 'обычная веб-камера' },
+    { title: 'Лицо', text: 'MediaPipe на видеокарте', model: true },
+    { title: 'Сглаживание', text: 'пороги, глюки, промежуточные кадры' },
+    { title: 'Модель из PSD', text: 'авто-риг и физика' },
+    { title: 'WebGL2', text: 'отрисовка' },
+    { title: 'OBS', text: 'с прозрачностью' },
   ],
 };
 
@@ -74,16 +63,19 @@ const SHOTS: Record<string, Array<{ name: string; caption: string }>> = {
     { name: 'agentyard-plan', caption: 'План: как понята цель, этапы, задачи и пакеты для установки' },
     { name: 'agentyard-progress', caption: 'Ход работы: что каждая модель делает прямо сейчас, журнал' },
   ],
-  rag: [{ name: 'pipewiki-answer', caption: 'pipewiki: ответ со ссылками на источники' }],
+  shibatube: [
+    { name: 'shibatube-studio', caption: 'Студия: модель собрана из PSD, справа — вывод в OBS, пресеты и выбор камеры' },
+    { name: 'shibatube-wizard', caption: 'Мастер модели: детали из PSD, проверка нарезки и превью в движении' },
+  ],
+  archforge: [
+    { name: 'archforge-schema', caption: 'Схема по требованиям: каждое звено объяснено — что это, зачем здесь, что будет при отказе' },
+    { name: 'archforge-tco', caption: 'Стоимость владения на 3 года: провайдеры и свои серверы с учётом роста' },
+    { name: 'archforge-code', caption: 'Генератор кода: дерево файлов по слоям и пояснение к каждому файлу' },
+  ],
   kobo: [
     { name: 'kobo-home', caption: 'Главная магазина' },
     { name: 'kobo-builder', caption: 'Конструктор: превью и цена меняются сразу, сборкой можно поделиться ссылкой' },
     { name: 'kobo-catalog', caption: 'Каталог: счётчики фильтров учитывают остальные фильтры, состояние — в адресе страницы' },
-  ],
-  freight: [
-    { name: 'freight-overview', caption: 'Экран разбора: примеры заявок, шаги, документ с цитатами, уточнения и черновик сделки' },
-    { name: 'freight-quotes', caption: 'Каждое значение подсвечено в тексте: зелёное подтверждено цитатой, оранжевое неоднозначно' },
-    { name: 'freight-clarify', caption: 'Неоднозначное становится вопросом с вариантами из справочника' },
   ],
 };
 
@@ -157,7 +149,7 @@ function CaseBody({ c }: { c: CaseStudy }) {
         </ul>
       </div>
       <div className="case__block">
-        <p className="case__label">Почему это про вашу вакансию</p>
+        <p className="case__label">Что это показывает</p>
         <p className="case__why">{c.why}</p>
       </div>
     </>
@@ -197,12 +189,6 @@ function CaseCard({ c }: { c: CaseStudy }) {
       </h3>
       <p className="case__summary">{c.summary}</p>
       {CHAINS[c.id] && <Chain steps={CHAINS[c.id]!} label={`Как устроен ${c.title}`} />}
-      {c.id === 'freight' && (
-        <div className="case__viz">
-          <Island name="intake-demo" component={IntakeDemo} props={{}} />
-          <p className="showcase__caption">{heroDemo.caption}</p>
-        </div>
-      )}
       <div className="case__cols">
         <div>
           <CaseBody c={c} />
@@ -216,12 +202,6 @@ function CaseCard({ c }: { c: CaseStudy }) {
 }
 
 export function App({ hasResume, repoUrl }: AppProps) {
-  const [agentyard, rag, freight] = aiCases as [CaseStudy, CaseStudy, CaseStudy];
-  const opsPhotos = [
-    { name: 'ops-warehouse', caption: 'Склад' },
-    { name: 'ops-factory', caption: 'Производство' },
-    { name: 'ops-drilling', caption: 'Буровая' },
-  ].filter((p) => hasImage(p.name));
 
   return (
     <>
@@ -303,8 +283,11 @@ export function App({ hasResume, repoUrl }: AppProps) {
         <Section
           id="cases"
           title="Проекты"
-          intro="Решения на данных заказчика, LLM-системы и продукт, доведённый до конца. Над каждым проектом подписано, чей он: заказчика, мой или тестовое задание."
+          intro="Мои продукты с моделями внутри и коммерческий проект. Над каждым подписано, чей он."
         >
+          <CaseCard c={agentyard} />
+          <CaseCard c={shibatube} />
+
           <article className="case case--flagship" id={flagship.anchor} aria-labelledby="drilltrace-title">
             <span className={`badge badge--${flagship.badge}`}>{flagship.badgeText}</span>
             <h3 className="case__title" id="drilltrace-title">
@@ -345,7 +328,7 @@ export function App({ hasResume, repoUrl }: AppProps) {
               </div>
               <div>
                 <div className="case__block">
-                  <p className="case__label">Почему это про вашу вакансию</p>
+                  <p className="case__label">Что это показывает</p>
                   <p className="case__why">{flagship.why}</p>
                 </div>
                 {flagship.facts && <Facts facts={flagship.facts} />}
@@ -355,13 +338,11 @@ export function App({ hasResume, repoUrl }: AppProps) {
             <CaseFoot c={flagship} />
           </article>
 
-          <CaseCard c={agentyard} />
-          <CaseCard c={rag} />
-          <CaseCard c={freight} />
+          <CaseCard c={archforge} />
           <CaseCard c={productCase} />
 
           <h3 className="subhead" id="tools">
-            Внутренние инструменты
+            Ещё проекты
           </h3>
           <ul className="tools">
             {tools.map((t) => (
@@ -388,62 +369,9 @@ export function App({ hasResume, repoUrl }: AppProps) {
         </Section>
 
         <Section
-          id="fit"
-          title="Под вашу вакансию"
-          intro="Требования вакансии и чем я их подтверждаю. Смотрю на них как разработчик продукта: что проверить быстро, что довести до боевой версии. Где опыта мало, так и написано."
-        >
-          <Island name="fit-matrix" component={FitMatrix} props={{}} />
-        </Section>
-
-        <Section
-          id="processes"
-          title="От интерфейсов к готовым продуктам"
-          intro="Шесть лет я делал фронтенд для систем складов, производства, логистики и бурения: экраны, на которых люди работают каждый день. Теперь собираю продукт целиком — разбираю процесс, проектирую, делаю MVP и довожу до запуска. Вот задачи, которые встречаются почти в любой компании, и как я к ним подхожу."
-        >
-          {opsPhotos.length > 0 && (
-            <div className="ops-photos">
-              {opsPhotos.map((p) => (
-                <figure key={p.name}>
-                  <Picture name={p.name} sizes="(min-width: 1240px) 300px, (min-width: 640px) 30vw, 92vw" />
-                  <figcaption>{p.caption}</figcaption>
-                </figure>
-              ))}
-            </div>
-          )}
-          <table className="bridge">
-            <thead>
-              <tr>
-                <th scope="col">Типовая задача</th>
-                <th scope="col">Что соберу как MVP</th>
-                <th scope="col">Как подхожу</th>
-              </tr>
-            </thead>
-            <tbody>
-              {processes.map((p) => (
-                <tr key={p.id}>
-                  <td data-label="Типовая задача" className="bridge__task">
-                    {p.task}
-                  </td>
-                  <td data-label="Что соберу как MVP" className="bridge__pilot">
-                    {p.mvp}
-                  </td>
-                  <td data-label="Как подхожу" className="bridge__basis">
-                    {p.basis}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p className="bridge-note">
-            Какая задача важнее у вас, решаем после разговора с теми, кто делает эту работу каждый день: с них
-            начинается любой продукт.
-          </p>
-        </Section>
-
-        <Section
           id="work"
           title="Коммерческий опыт"
-          intro="Шесть лет интерфейсов для систем, которыми пользуются на складах, заводах и в логистике. Скриншотов нет — проекты под NDA."
+          intro="Шесть лет фронтенда в продакшене: системы, с которыми люди работают каждый день. Скриншотов нет — проекты под NDA."
         >
           <div className="work">
             {commercial.map((w) => (
@@ -488,15 +416,7 @@ export function App({ hasResume, repoUrl }: AppProps) {
           </table>
         </Section>
 
-        <Section
-          id="ask"
-          title="Спросите резюме"
-          intro="Маленький пример поиска по базе знаний: база — эта страница."
-        >
-          <Island name="ask-widget" component={AskWidget} props={{}} />
-        </Section>
-
-        <Section id="stack" title="Стек" intro="С уровнем: где технология работала у заказчиков, где только в моих проектах, а что изучаю.">
+        <Section id="stack" title="Стек" intro="С уровнем: где технология работала в коммерческих проектах, где — в моих продуктах, а что изучаю.">
           <div className="stack-legend">
             <span>
               <i className="level level--prod" aria-hidden="true" />
@@ -592,7 +512,7 @@ export function App({ hasResume, repoUrl }: AppProps) {
         </section>
       </main>
 
-      {/* пасхалка: запускается, когда читатель докрутил до низа */}
+      {/* пасхалка: появляется, если читатель пробыл внизу страницы 30 секунд */}
       <Island name="hr-event" component={HrEvent} props={{}} />
 
       <footer className="footer">
